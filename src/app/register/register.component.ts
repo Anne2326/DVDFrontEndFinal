@@ -84,8 +84,8 @@ export class RegisterComponent implements OnInit {
         this.toastr.success("Form Submitted", "Success");
         this.router.navigate(['/customer']);
         if(data){
-    localStorage.setItem('token',data.token);
-    const decoded:any=jwtDecode(data.token);
+    localStorage.setItem('token',data.custokken);
+    const decoded:any=jwtDecode(data.custokken);
     localStorage.setItem('customer',JSON.stringify(decoded));
 
         }

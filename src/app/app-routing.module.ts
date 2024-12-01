@@ -24,8 +24,7 @@ const routes: Routes = [
         path: 'register',
         component: RegisterComponent
       },
-      { 
-        path: 'customer', component: CustomerComponent },
+      {path: 'customer', component: CustomerComponent },
       { path: 'admin', component: AdminComponent },
 
 

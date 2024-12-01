@@ -15,12 +15,13 @@ function emailContainsAt(control: AbstractControl) {
 }
 
 export interface Customer {
-  id: number; // Unique identifier for the customer
+  Id: number; // Unique identifier for the customer
   userName: string; // Username of the customer
-  phoneNumber: string; // Phone number of the customer
-  email: string; // Email address of the customer
-  nic: string; // National ID card number
-  password: string; // Password for the customer account
+  PhoneNumber: string; // Phone number of the customer
+  Email: string; // Email address of the customer
+  NIC: string; // National ID card number
+  password: string;
+  Role:string; // Password for the customer account
   rentals?: Rental[]; // Collection of rentals (optional)
   isActive?: boolean; // Indicates if the customer is active (optional)
 }

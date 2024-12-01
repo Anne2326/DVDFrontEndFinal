@@ -8,16 +8,16 @@
         <div class="div-form">
             <div class="form-overlay">
 
-                <form [formGroup]="loginForm">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
 
                     <h1>Sign In</h1>
                     <div class=" p-3">
 
                         <input type="text" class="form-control text-white" id="exampleInputName" placeholder="UserName"
-                            formControlName="username">
-                        <div class="" *ngIf="loginForm.controls['username'].touched">
-                            <p class="text-white" *ngIf="loginForm.controls['username'].hasError('required')"> This
+                            formControlName="userName">
+                        <div class="" *ngIf="loginForm.controls['userName'].touched">
+                            <p class="text-white" *ngIf="loginForm.controls['userName'].hasError('required')"> This
                                 field is required </p>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class=" p-3">
-                        <button type="submit" class="btn1" (ngSubmit)="onSubmit()" [disabled]="loginForm.invalid">Sign
+                        <button type="submit" class="btn1"  [disabled]="loginForm.invalid">Sign
                             In</button>
                     </div>
                     <div class="div d-flex p-3">

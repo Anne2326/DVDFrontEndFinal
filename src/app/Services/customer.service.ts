@@ -11,7 +11,7 @@ export class CustomerService {
 
  private url='http://localhost:5276/api/Customer/Get Customers';
   private registerurl='http://localhost:5276/api/Auth/Customer Register';
-  private loginurl='http://localhost:5276/api/Auth/Customer Login?';
+  private loginurl='http://localhost:5276/api/Auth';
   constructor(private http:HttpClient) { }
 
   getcustomers(){
@@ -27,7 +27,7 @@ export class CustomerService {
 
     return this.http.post<IToken>(this.registerurl,customer);
   }
-  login(customer:any){
+  customerlogin(customer:any){
 
     return this.http.post<IToken>(this.loginurl,customer);
   }

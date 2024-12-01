@@ -1,0 +1,188 @@
+
+  
+
+  /* Hero Section (background image and layout) */
+  .hero-section {
+    background-image: linear-gradient(
+        to top, 
+        rgba(0, 0, 0, 0.8) 0%, 
+        rgba(0, 0, 0, 0.7) 60%, 
+        rgba(0, 0, 0, 0.5) 100%
+    ), url('/Dvd.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    /* align-items: center;
+    justify-content: center; */
+}
+
+/* Header styling */
+h1.display-1 {
+    font-size: 4rem;
+    font-weight: bold;
+    color: red;
+  margin-top: 10px;
+    margin-left: 10px;
+}
+
+/* Form Section Overlay Styling */
+.div-form {
+    position: relative;
+    z-index: 1; /* Ensure it appears above the background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.form-overlay {
+    background: rgba(0, 0, 0, 0.6); /* Transparent black background with opacity */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 500px; /* Max width for the form */
+    margin-left: 200px;
+}
+
+.form-control{
+
+border-color: rgb(122, 116, 116);
+background: rgba(0, 0, 0, 0.6); 
+width: 350px;
+height: 60px;
+
+}
+
+.form-overlay form {
+    color: #fff; /* White text for the form */
+}
+
+/* Footer styling */
+.div-footer {
+    background: linear-gradient(to bottom, #000, #003366); /* Dark blue to black gradient */
+    padding: 20px;
+    color: #fff;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.footer-item {
+    flex: 1;
+    padding: 10px;
+}
+
+.footer p {
+    margin: 5px 0;
+    font-size: 1.1rem;
+    color: #f1f1f1;
+}
+
+.footer-item:hover {
+    color: #ffcc00;
+    cursor: pointer;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-item {
+        margin-bottom: 15px;
+    }
+
+    .footer-item:last-child {
+        margin-bottom: 0;
+    }
+}
+/*  */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #333;
+    margin: 0;
+    padding: 0;
+}
+.div-form {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    margin: auto;
+
+}
+.form-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 40px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    height: 650px;
+    margin: auto;
+}
+form h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+.mb-3 {
+    margin-bottom: 15px;
+}
+.form-control {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    height: 50px;
+}
+.form-control:focus {
+    outline: none;
+    border-color: #656362; /* Red when focused */
+}
+.form-control::placeholder {
+    color:lightgray; /* White placeholder text */
+}
+.form-check-input {
+    margin-right: 10px;
+}
+ .btn1 {
+    width:355px ;
+    padding: 14px;
+    background-color: red;    
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    height: 50px;
+} 
+.btn1:hover {
+    background-color:maroon;
+    transition: background-color 0.3s ease;
+}
+.form-check-label {
+    color: white;
+    font-size: 14px;
+}
+
+/* Targeting the <p> tags within the password error div */
+.p-3 p {
+    font-size: 4px;
+  }
+  

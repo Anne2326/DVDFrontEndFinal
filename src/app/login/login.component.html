@@ -1,0 +1,89 @@
+<div class="hero-section">
+    <div class="row">
+        <header class="header mt-1">
+            <h1 class="display-1 text-center text-red mt-0">CineFlix</h1>
+        </header>
+    </div>
+    <div class="row" style="margin-left: 300px;">
+        <div class="div-form">
+            <div class="form-overlay">
+
+                <form [formGroup]="loginForm">
+
+
+                    <h1>Sign In</h1>
+                    <div class=" p-3">
+
+                        <input type="text" class="form-control text-white" id="exampleInputName" placeholder="UserName"
+                            formControlName="username">
+                        <div class="" *ngIf="loginForm.controls['username'].touched">
+                            <p class="text-white" *ngIf="loginForm.controls['username'].hasError('required')"> This
+                                field is required </p>
+                        </div>
+                    </div>
+
+                    <div class=" p-3">
+
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                            formControlName="password">
+
+                        <div class="" *ngIf="loginForm.controls['password'].touched">
+                            <p class="text-white" *ngIf="loginForm.controls['password'].hasError('required')">This Field
+                                is required 
+                            </p>
+                            <!--If Password length is less than 6-->
+                            <p class="text-white" *ngIf="loginForm.controls['password'].hasError('minlength')">
+                                Password should contain at least 6 characters.
+                            </p>
+                    
+                            <!-- If password length is greater than 6 -->
+                            <p class="text-white fs-1" *ngIf="loginForm.controls['password'].hasError('maxlength')">
+                                Password should contain less than 6 characters.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class=" p-3">
+                        <button type="submit" class="btn1" (ngSubmit)="onSubmit()" [disabled]="loginForm.invalid">Sign
+                            In</button>
+                    </div>
+                    <div class="div d-flex p-3">
+                        <h6 class="text-secondary ">New to CineFlix?</h6> <a href="" [routerLink]="['/register']"
+                            style="text-decoration: none;">
+                            <h6 class="text-white">Sign up now.</h6>
+                        </a>
+                    </div>
+
+                    <div class=" form-check p-5 ">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label " for="exampleCheck1" style="font-size: 15px;">Remember
+                            me</label>
+                    </div>
+
+
+
+                    <p class="text-secondary"> This page is protected by Google reCAPTCHA to</p>
+                    <div class="div d-flex ">
+                        <p class="text-secondary"> ensure you're not a bot.</p>
+                        <p class="text-primary">Learn more.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="div-footer">
+    <footer class="footer text-white">
+        <div class="footer-item">
+            <p>Email: CineFlix&#64;gmail.com</p>
+        </div>
+        <div class="footer-item">
+            <p><i class="bi bi-c-circle"></i> All Rights Reserved by CineFlix 2024</p>
+        </div>
+        <div class="footer-item">
+            <p>Contact us: 0712345678</p>
+        </div>
+    </footer>
+</div>

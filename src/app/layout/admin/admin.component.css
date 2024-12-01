@@ -1,0 +1,18 @@
+
+.btn:hover{
+    background-color:rgb(17, 215, 245);
+    color: black;
+    }
+    
+    #btn:hover{
+        background-color: rgb(238, 244, 238);
+        color: black;
+    }
+    .table th{
+        background-color: grey;
+    }
+    .btnm-3{
+        background-color: rgb(160, 77, 25);
+    }
+    
+    

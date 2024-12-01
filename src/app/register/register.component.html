@@ -1,0 +1,101 @@
+<div class="hero-section">
+    <div class="row">
+        <header class="header mt-1">
+            <h1 class="display-1 text-center text-red mt-0">CineFlix</h1>
+        </header>
+    </div>
+    <div class="row" style="margin-left: 300px;">
+        <div class="div-form">
+            <div class="form-overlay">
+                <form [formGroup]="loginForm">
+                    <h1>Sign Up</h1>
+                    <div class=" p-3">
+                        <input type="text" class="form-control text-white" id="exampleInputName" placeholder="UserName"
+                            formControlName="username">
+                        <div class="" *ngIf="loginForm.controls['username'].touched">
+                            <p class="text-white fs-6" *ngIf="loginForm.controls['username'].hasError('required')">This
+                                Field is required </p>
+                        </div>
+                    </div>
+                    <div class=" p-3">
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                            formControlName="password">
+                        <div class="" *ngIf="loginForm.controls['password'].touched">
+                            <p class="text-white fs-6" *ngIf="loginForm.controls['password'].hasError('required')"> This
+                                Field  is required </p>
+                               
+                            <p class="text-white fs-6" *ngIf="loginForm.controls['password'].hasError('minlength')">
+                                Password should contain at least 6 characters.
+                            </p>
+                            <p class="text-white fs-6" *ngIf="loginForm.controls['password'].hasError('maxlength')">
+                                Password should contain less than 6 characters.
+                            </p>
+                        </div>
+                    </div>
+                    <div class=" p-3">
+                        <input type="text" class="form-control" id="exampleInputPhone" placeholder="MobileNumber"
+                            formControlName="phonenumber">
+                        <div class="" *ngIf="loginForm.controls['phonenumber'].touched">
+                            <p class="text-white fs-6" *ngIf="loginForm.controls['phonenumber'].hasError('required')">This
+                                Field is required </p>
+                            <p class="text-white fs-6" *ngIf="loginForm.controls['password'].hasError('minlength')">
+                                Phonenumber should contain 10 characters.
+                            </p>
+                            <p class="text-white fs-6" *ngIf="loginForm.controls['password'].hasError('maxlength')">
+                                Phonenumber should contain 10 characters.
+                            </p>
+                        </div>
+                    </div>
+                    <div class=" p-3">
+                        <input type="text" class="form-control" id="exampleInputNIC" placeholder="NIC"
+                            formControlName="nic">
+                        <div class="" *ngIf="loginForm.controls['nic'].touched">
+                            <p class="text-white fs-6" *ngIf="loginForm.controls['nic'].hasError('required')">This Field is
+                                required </p>
+                            <p class="text-white fs-6" *ngIf="loginForm.controls['nic'].hasError('minlength')">
+                                NIC should contain 10 characters.
+                            </p>
+                            <p class="text-white fs-6" *ngIf="loginForm.controls['nic'].hasError('maxlength')">
+                                NIC should contain 10 characters.
+                            </p>
+                        </div>
+                    </div>
+                    <div class=" p-3 ">
+                        <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email"
+                            formControlName="email">
+                        <div class="" *ngIf="loginForm.controls['email'].touched">
+                            <p class="text-white fs-6" *ngIf="loginForm.controls['email'].hasError('required')">This Field is
+                                required </p>
+                            <p class="text-white fs-6" *ngIf="loginForm.controls['email'].hasError('emailNoAt')">
+                                Email must contain the &#64; symbol.
+                            </p>
+                        </div>
+                    </div>
+                    <div class=" p-3">
+                        <button type="submit" class="btn1" (click)="onSubmit()" [disabled]="loginForm.invalid">Sign
+                            Up </button>
+                    </div>
+                    <div class="div d-flex p-3">
+                        <h6 class="text-secondary ">Are you already member to CineFlix?</h6> <a href=""
+                            style="text-decoration: none;">
+                            <h6 class="text-white" [routerLink]="['/login']">Sign In now.</h6>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="div-footer">
+    <footer class="footer text-white">
+        <div class="footer-item">
+            <p>Email: CineFlix&#64;gmail.com</p>
+        </div>
+        <div class="footer-item">
+            <p><i class="bi bi-c-circle"></i> All Rights Reserved by CineFlix 2024</p>
+        </div>
+        <div class="footer-item">
+            <p>Contact us: 0712345678</p>
+        </div>
+    </footer>
+</div>

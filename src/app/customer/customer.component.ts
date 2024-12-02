@@ -3,6 +3,8 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from '../Services/customer.service';
+import { AdminService } from '../Services/admin.service';
+import { DVD } from '../layout/admin/admin.component';
 
 function emailContainsAt(control: AbstractControl) {
   const email = control.value;
@@ -16,11 +18,11 @@ function emailContainsAt(control: AbstractControl) {
 }
 
 export interface Customer {
-  Id: number; // Unique identifier for the customer
-  userName: string; // Username of the customer
-  PhoneNumber: string; // Phone number of the customer
-  Email: string; // Email address of the customer
-  NIC: string; // National ID card number
+  id: number; // Unique identifier for the customer
+  userName:string;
+  phoneNumber:string;
+  email: string;
+   nic: string;// National ID card number
   password: string;
   Role:string; // Password for the customer account
   rentals?: Rental[]; // Collection of rentals (optional)
@@ -34,7 +36,9 @@ export interface Rental {
   rentalDate: Date; // Date when the rental was created
   returnDate?: Date; // Optional: Date when the rental was returned
   isOverdue?: boolean; // Optional: Indicates if the rental is overdue (defaults to false)
-  status?: string; 
+  status: string; 
+  customer?:Customer;
+  dvd?:DVD;
   // Status of the rental (e.g., "Pending")
 }
 
@@ -62,9 +66,9 @@ export class CustomerComponent implements OnInit {
   searchText:string = '';
 
    rentals: any[]=[];
-   dvds: any[]=[];
-  // dvd:number;
+   dvds: DVD[]=[];
    customers: any[]=[];
+
 
   showdashboard=true
   showreview = false;
@@ -74,7 +78,7 @@ export class CustomerComponent implements OnInit {
 
  
 
-    constructor(private fb: FormBuilder, private  toastr: ToastrService,private router:Router,private customerservice: CustomerService) {
+    constructor(private fb: FormBuilder, private  toastr: ToastrService,private router:Router,private customerservice: CustomerService,private dvdservice:AdminService) {
       this.editProfile = new FormGroup({
         username: new FormControl(""),
       
@@ -89,7 +93,7 @@ export class CustomerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
+this.loaddvds()
       this.editProfile = this.fb.group({
   
   
@@ -123,8 +127,10 @@ export class CustomerComponent implements OnInit {
   customerhomepage() {
       this.resetSections();
       this.showdashboard = true;
+    this.loaddvds()
+      
     }
-  
+
     review(){
 
    this.resetSections();
@@ -146,15 +152,6 @@ export class CustomerComponent implements OnInit {
              this.showrental = true;
            
            }
-           
-                        
-          
-
-
-
-
-
-
 
     resetSections() {
       this.showreview = false;
@@ -178,19 +175,69 @@ export class CustomerComponent implements OnInit {
       }
     }
   
-    Rent(){
-      this.toastr.success("Rent Successfully ", "Success");
-
-
-
+    Rent(dvd: DVD) {
+      const getcustomer = localStorage.getItem('customer'); // Retrieve the customer from localStorage
+      console.log(getcustomer)
+      let cusId: number ; // Initialize cusId
+      
+      if (getcustomer) {
+        try {
+          const customer = JSON.parse(getcustomer);
+          console.log(customer.Id) // Parse the JSON string to an object
+          if (customer.Id) {
+            cusId = +customer.Id; // Assign the ID to cusId
+            console.log(cusId)
+          } else {
+            this.toastr.error('Invalid customer data.', 'Error');
+            return;
+          }
+        } catch (error) {
+          console.error('Error parsing customer data from localStorage:', error);
+          this.toastr.error('Failed to retrieve customer information.', 'Error');
+          return;
+        }
+      } else {
+        this.toastr.error('You must be logged in to rent a DVD.', 'Error');
+        return;
+      }
+    
+      // Construct the rental request
+      const rentalRequest = {
+        customerId: cusId, // Use the assigned customer ID
+        dvdId: dvd.id,
+        rentalDate: new Date().toISOString()
+      };
+    
+      // Call the service to handle the rental request
+      this.customerservice.addrental(rentalRequest).subscribe({
+        next: (response) => {
+          console.log('Rental successful:', response);
+          this.toastr.success('Rent Successful!', 'Success');
+        },
+        error: (error) => {
+          console.error('Error during rental:', error);
+          this.toastr.error('Failed to rent DVD. Please try again.', 'Error');
+        }
+      });
     }
+    
+    
+    
+    loaddvds(){
+      this.dvdservice.getalldvds().subscribe((data)=>{
+        this.dvds=data;
+        console.log(this.dvds)
+      })
+    }
+    }
+
 
 
   
 
 
 
-}
+
 
 
 

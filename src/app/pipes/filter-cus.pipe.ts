@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Customer } from '../Services/customer.service';
+import { Customer } from '../customer/customer.component';
+
 
 @Pipe({
   name: 'filterCus'
@@ -7,17 +8,19 @@ import { Customer } from '../Services/customer.service';
 export class FilterCusPipe implements PipeTransform {
 
   transform(value: Customer[], ...args: string[]): Customer[] {
-    let searchtext = args[0]
+    const searchtext = args[0] || ''; // Fallback to empty string if searchtext is null/undefined
 
-    return value.filter(a=>{
-      const isIdMatch = !isNaN(+searchtext) && a.id === +searchtext; // Check exact match for ID
-      const isOtherFieldMatch =
-      a.username.toLowerCase().includes(searchtext.toLowerCase()) ||
-      a.email.toLowerCase().includes(searchtext.toLowerCase()) 
-      // a.nic.toLowerCase().includes(searchtext)
+    if (!value || !searchtext) {
+      return value; // If no data or no search text, return the original array
+    }
+
+    return value.filter(a => {
+      const isIdMatch = !isNaN(+searchtext) && a.id === +searchtext; // Match ID
+      const isOtherFieldMatch = 
+        (a.userName?.toLowerCase().includes(searchtext.toLowerCase()) || false) ||
+        (a.email?.toLowerCase().includes(searchtext.toLowerCase()) || false);
 
       return isIdMatch || isOtherFieldMatch;
     });
   }
-
 }

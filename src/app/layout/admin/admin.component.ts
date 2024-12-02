@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from '../../Services/customer.service';
 import { AdminService } from '../../Services/admin.service';
 import { Router } from '@angular/router';
+import { Customer, Rental } from '../../customer/customer.component';
 
 @Component({
   selector: 'app-admin',
@@ -11,11 +12,16 @@ import { Router } from '@angular/router';
   styleUrl: './admin.component.css'
 })
 export class AdminComponent implements OnInit {
+takeAction(arg0: any) {
+throw new Error('Method not implemented.');
+}
   addDvdForm: FormGroup;
 
-  dvds: any[]=[];
-  customers: any[]=[];
+  dvds: DVD[]=[];
+  customers: Customer[]=[];
   searchText:any;
+  rentals:Rental[]=[]
+
 
   showdashboard=true;
   showrental=false;
@@ -92,6 +98,7 @@ searchcustomer: string='';
       displayRentals() {
         this.resetSections();
         this.showrental=true
+        this.getrentals()
       }
   
   
@@ -129,7 +136,6 @@ searchcustomer: string='';
         formData.append('Director', this.addDvdForm.get('director')?.value);
         formData.append('Genre', this.addDvdForm.get('genre')?.value);
         formData.append('Price', this.addDvdForm.get('price')?.value);
-        formData.append('ReleaseDate', this.addDvdForm.get('releaseDate')?.value);
         formData.append('CopiesAvailable', this.addDvdForm.get('CopiesAvailable')?.value);
        
         if (this.selectedFile) {
@@ -175,6 +181,13 @@ searchcustomer: string='';
               });
             }
             this.toastr.info('Dvd  is deleted')
+          }
+
+          getrentals(){
+            this.adminservice.getallrentals().subscribe(data=>{
+              this.rentals =data
+              console.log(this.rentals)
+            })
           }
   
 

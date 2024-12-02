@@ -72,45 +72,19 @@
     </div>
     <br>
     <div class="Section">
-      <div class="card" style="width: 15rem;">
-        <img class="card-img-top" src="DemonyColony.jpg" alt="Card image cap" style="height:250px;">
-        <div class="card-body" >
-          <h3 class="card-title ">DemonyColony2</h3>
-          <b class="card-text text-danger">Avaliable Copies:</b>
-          <button class="btn2" (click)="Rent()"> Rent Now</button>
+      <div class="card" style="width: 15rem;" *ngFor="let dvd of dvds">
+        <img 
+          class="card-img-top" 
+          [src]="'http://localhost:5276' + dvd.imageUrl" 
+          alt="{{ dvd.title }}" 
+        >
+        <div class="card-body">
+          <h3 class="card-title">{{ dvd.title }}</h3>
+          <b class="card-text text-danger">Available Copies: {{ dvd.copiesAvailable }}</b>
+          <button class="btn2" (click)="Rent(dvd)">Rent Now</button>
         </div>
       </div>
 
-      <div class="card" style="width: 15rem;">
-        <img class="card-img-top" src="GOAT.jpg" alt="Card image cap" style="height:250px;">
-        <div class="card-body">
-          <h3 class="card-title">GOAT</h3>
-          <b class="card-text text-danger">Avaliable Copies:</b>
-          <button class="btn2" (click)="Rent()"> Rent Now</button>
-        </div>
-      </div>
-      <div class="card" style="width: 15rem;">
-        <img class="card-img-top" src="Kanguva.jpg" alt="Card image cap" style="height:250px;">
-        <div class="card-body">
-          <h3 class="card-title">Kanguva</h3>
-          <b class="card-text text-danger">Avaliable Copies:</b><br>
-          <button class="btn2" (click)="Rent()"> Rent Now</button>
-        </div>
-      </div>
-      <div class="card" style="width: 15rem;">
-       
-        <img class="card-img-top" src="Amaran.jpg" alt="Card image cap" style="height:250px;" >
-       
-         
-        <div class="card-body"> 
-          
-          <h3 class="card-title">Amaran</h3>
-          <b class="card-text text-danger">Avaliable Copies:</b><br>
-          <button class="btn2" (click)="Rent()"> Rent Now</button>
-        </div>
-      </div>
-
-    </div>
   </div>
 
 

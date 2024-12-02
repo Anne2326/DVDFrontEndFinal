@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { IToken } from '../modals/token';
+import { Customer } from '../customer/customer.component';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +32,8 @@ export class CustomerService {
 
     return this.http.post<IToken>(this.loginurl,customer);
   }
-  addrental(customer:any){
-    return this.http.post('http://localhost:5276/api/Rental/AddRental',customer)
+  addrental(rentalRequest: { customerId: number; dvdId: number; rentalDate: string }){
+    return this.http.post('http://localhost:5276/api/Rental/AddRental',rentalRequest)
   }
 
 
@@ -54,21 +55,18 @@ export class CustomerService {
   }
 
 }
+// export { Customer }/;
+//export interface Customer{
 
-
-
-export interface Customer{
-
-id:number;
-
-    username:string;
-    phonenumber:string;
-    email: string;
-    nic: string;
-    password: string;
-    //rentals?: DVD[];
-    isActive?: boolean;
-  }
+// id:number;
+// userName:string;
+//     phoneNumber:string;
+//     email: string;
+//     nic: string;
+//     password: string;
+//     rentals?: DVD[];
+//     isActive?: boolean;
+//   }
 
 
 

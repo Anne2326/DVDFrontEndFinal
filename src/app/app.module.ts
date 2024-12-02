@@ -19,6 +19,7 @@ import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { FilterPipe } from './pipes/filter.pipe';
 import { FilterCusPipe } from './pipes/filter-cus.pipe';
 import { FilterDvdPipe } from './pipes/filter-dvd.pipe';
+import { PendingFilPipe } from './pipes/pending-fil.pipe';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { FilterDvdPipe } from './pipes/filter-dvd.pipe';
     FilterPipe,
     FilterCusPipe,
     FilterDvdPipe,
+    PendingFilPipe,
   ],
   imports: [
     BrowserModule,

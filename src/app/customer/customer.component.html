@@ -301,8 +301,8 @@
               </div>
             </div>
             <div class=" p-3">
-              <button type="submit" class="btn-signin" (click)="onEdit()" [disabled]="editProfile.invalid">Sign
-                Up </button>
+              <button type="submit" class="btn-signin" (click)="onEdit()" [disabled]="editProfile.invalid">Update
+                </button>
             </div>
 
           </form>
@@ -327,12 +327,30 @@
   <div style="width: 85%;height: 750px" class="shadow  m-1 rounded " *ngIf="showcomment">
     <label for="floatingTextarea" class="fs-3 m-5" style="font-weight: bold;"> You Can Write A Comment Here......</label>
     <div class="form-floating " >
-      
-      <textarea class="form-control m-5" style="width: 1000px; border-color: rgb(2, 2, 16);height: 400px; "
-        id="floatingTextarea"></textarea>
-      
-    </div>
-    
+      <div class="button-type">
+        <button type="button" class="btn btn-info">Add Comments</button>
+      </div><br>
+     
+      <!-- <textarea class="form-control m-5" style="width: 1000px; border-color: rgb(2, 2, 16);height: 400px; "
+        id="floatingTextarea"></textarea> -->
+        <div class="speech-bubble">
+          <div class="lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+        </div><br>
+        <div class="speech-bubble">
+          <div class="lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+        </div><br>
+
+      </div>
+     
+     
 
 
 
@@ -341,4 +359,4 @@
 
 
 
-  </div>
+

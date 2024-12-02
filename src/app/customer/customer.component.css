@@ -384,3 +384,41 @@ h1 {
     padding: 10px 15px;
   }
 }
+
+
+
+
+
+.speech-bubble {
+  position: relative;
+  width: 250px;
+  height: 200px;
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 10px;
+  
+  
+}
+
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  padding: 10px;
+}
+
+.line {
+  height: 6px;
+  width: 70%;
+  background-color: #000;
+  border-radius: 3px;
+}
+
+
+.button-type{
+  text-align: right;
+}
+
+

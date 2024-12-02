@@ -9,9 +9,9 @@ import { IToken } from '../modals/token';
 export class CustomerService {
 
 
- private url='http://localhost:5276/api/Customer/Get Customers';
-  private registerurl='http://localhost:5276/api/Auth/Customer Register';
-  private loginurl='http://localhost:5276/api/Auth';
+ private url='http://localhost:5276/api/Customer/GetCustomers';
+  private registerurl='http://localhost:5276/api/Auth/CustomerRegister';
+  private loginurl='http://localhost:5276/api/Auth/CustomerLogin';
   constructor(private http:HttpClient) { }
 
   getcustomers(){
@@ -31,7 +31,9 @@ export class CustomerService {
 
     return this.http.post<IToken>(this.loginurl,customer);
   }
-  
+  addrental(customer:any){
+    return this.http.post('http://localhost:5276/api/Rental/AddRental',customer)
+  }
 
 
   isLoggedIn(){
@@ -59,8 +61,8 @@ export interface Customer{
 
 id:number;
 
-    userName:string;
-    phoneNumber:string;
+    username:string;
+    phonenumber:string;
     email: string;
     nic: string;
     password: string;

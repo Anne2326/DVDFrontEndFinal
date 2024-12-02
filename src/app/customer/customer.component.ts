@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { CustomerService } from '../Services/customer.service';
 
 function emailContainsAt(control: AbstractControl) {
   const email = control.value;
@@ -33,7 +34,8 @@ export interface Rental {
   rentalDate: Date; // Date when the rental was created
   returnDate?: Date; // Optional: Date when the rental was returned
   isOverdue?: boolean; // Optional: Indicates if the rental is overdue (defaults to false)
-  status: string; // Status of the rental (e.g., "Pending")
+  status?: string; 
+  // Status of the rental (e.g., "Pending")
 }
 
 
@@ -72,7 +74,7 @@ export class CustomerComponent implements OnInit {
 
  
 
-    constructor(private fb: FormBuilder, private  toastr: ToastrService,private router:Router) {
+    constructor(private fb: FormBuilder, private  toastr: ToastrService,private router:Router,private customerservice: CustomerService) {
       this.editProfile = new FormGroup({
         username: new FormControl(""),
       
@@ -142,11 +144,11 @@ export class CustomerComponent implements OnInit {
 
           this.resetSections();
              this.showrental = true;
+           
            }
            
                         
-
-
+          
 
 
 
@@ -189,3 +191,8 @@ export class CustomerComponent implements OnInit {
 
 
 }
+
+
+
+
+

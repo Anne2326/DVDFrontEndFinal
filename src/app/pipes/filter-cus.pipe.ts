@@ -12,7 +12,7 @@ export class FilterCusPipe implements PipeTransform {
     return value.filter(a=>{
       const isIdMatch = !isNaN(+searchtext) && a.id === +searchtext; // Check exact match for ID
       const isOtherFieldMatch =
-      a.userName.toLowerCase().includes(searchtext.toLowerCase()) ||
+      a.username.toLowerCase().includes(searchtext.toLowerCase()) ||
       a.email.toLowerCase().includes(searchtext.toLowerCase()) 
       // a.nic.toLowerCase().includes(searchtext)
 

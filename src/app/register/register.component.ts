@@ -78,6 +78,9 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
+    console.log(this.loginForm.value);;
+    
+
       this.customerservice.customerregister(this.loginForm.value).subscribe(data=>{
 
         console.log(data);

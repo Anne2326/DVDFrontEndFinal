@@ -7,7 +7,7 @@
     <div class="row" style="margin-left: 300px;">
         <div class="div-form">
             <div class="form-overlay">
-                <form [formGroup]="loginForm">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
                     <h1>Sign Up</h1>
                     <div class=" p-3">
                         <input type="text" class="form-control text-white" id="exampleInputName" placeholder="UserName"
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class=" p-3">
-                        <button type="submit" class="btn1" (click)="onSubmit()" [disabled]="loginForm.invalid">Sign
+                        <button type="submit" class="btn1" [disabled]="loginForm.invalid">Sign
                             Up </button>
                     </div>
                     <div class="div d-flex p-3">

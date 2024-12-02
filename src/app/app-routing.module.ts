@@ -26,7 +26,7 @@ const routes: Routes = [
       },
       {path: 'customer', component: CustomerComponent },
       { path: 'admin', component: AdminComponent },
-      {path:'customerpage',component:CustomerComponent},
+     
 
 
     ]

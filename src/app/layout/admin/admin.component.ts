@@ -12,9 +12,7 @@ import { Customer, Rental } from '../../customer/customer.component';
   styleUrl: './admin.component.css'
 })
 export class AdminComponent implements OnInit {
-takeAction(arg0: any) {
-throw new Error('Method not implemented.');
-}
+
   addDvdForm: FormGroup;
 
   dvds: DVD[]=[];
@@ -52,6 +50,7 @@ searchcustomer: string='';
     ngOnInit(): void {
       this.loadcustomers()
       this.loaddvds()
+      this.getrentals()
     }
   
     // Toggle section visibility
@@ -149,14 +148,6 @@ searchcustomer: string='';
         const releaseDate = new Date(this.addDvdForm.get('releaseDate')?.value);
         formData.append('releaseDate', releaseDate.toISOString());
 
-
-
-
-
-
-
-
-
         this.adminservice.createdvd(formData).subscribe({
           next: (response) => {
             this.toastr.success('DVD added successfully', 'Success');
@@ -189,9 +180,40 @@ searchcustomer: string='';
               console.log(this.rentals)
             })
           }
-  
+          rejectAction(id: number) {
+            this.adminservice.rejectrental(id).subscribe(
+                (data) => {
+                    console.log(data); // Ensure 'data' contains the expected JSON response
+                    if (data) {
+                        this.toastr.success( 'Success'); // Use the message from the API response
+                    }
+                },
+                (error) => {
+                    console.error('Error:', error);
+                    this.toastr.error('Error rejecting rental.', 'Error');
+                }
+            );
+        }
+        
+          
+          
+            acceptAction(id: number): void {
+              this.adminservice.acceptRental(id).subscribe({
+                next: (data) => {
+                  console.log(data)
+                  // Assuming `data` contains rental information, including the DVD title
+                  const movieName =  data;
+                  this.toastr.success(`Rental accepted successfully"!`, 'Success');
+              this.getrentals()
+                },
+                error: (err) => {
+                  console.error('Error accepting rental:', err);
+                  this.toastr.error('Failed to accept the rental. Please try again.', 'Error');
+                }
+              });
+            }
+            }
 
-}
 
 export interface DVD {
   imageUrl: any;

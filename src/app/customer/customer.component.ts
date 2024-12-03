@@ -85,10 +85,6 @@ export class CustomerComponent implements OnInit {
         phonenumber: new FormControl(""),
         nic: new FormControl(""),
         email: new FormControl(""),
-  
-  
-  
-  
       })
     }
 
@@ -201,6 +197,12 @@ this.loaddvds()
         return;
       }
     
+        // Validate if the DVD has copies available
+  if (dvd.copiesAvailable <= 0) {
+    this.toastr.error(`The DVD "${dvd.title}" is out of stock and cannot be rented.`, 'Error');
+    return;
+  }
+  
       // Construct the rental request
       const rentalRequest = {
         customerId: cusId, // Use the assigned customer ID

@@ -61,7 +61,7 @@
       </li>
       <li class="nav-item">
         <button class="btn text-white m-3 fs-5" (click)="displayRentals()">
-          <i class="bi bi-graph-up-arrow"></i> Rentals
+          <i class="bi bi-graph-up-arrow"></i> Rental request
         </button>
       </li>
       <li class="nav-item">
@@ -214,7 +214,7 @@
           <!-- Square 3: Number of Rentals -->
           <div class="col-4">
               <div class="card text-center text-white bg-danger shadow-lg p-4">
-                  <h5>Number of Rentals</h5>
+                  <h5>Total Number of Rentals</h5>
                   <p class="display-4">{{rentals.length}}</p>
               </div>
           </div>
@@ -223,23 +223,23 @@
           <div class="col-4">
               <div class="card text-center text-white bg-warning shadow-lg p-4">
                   <h5>Number of Returns</h5>
-                  <p class="display-4">50</p>
+                  <p class="display-4">{{returnedRentalsCount}}</p>
               </div>
           </div>
   
-          <!-- Square 5: Empty -->
+          <!-- Square 5: number of rejectRentals -->
           <div class="col-4">
               <div class="card text-center text-white bg-info shadow-lg p-4">
-                  <h5>Empty</h5>
-                  <p class="display-4">--</p>
+                  <h5>number of rejectRentals</h5>
+                  <p class="display-4">{{rejectedRentalsCount}}</p>
               </div>
           </div>
   
-          <!-- Square 6: Placeholder -->
+          <!-- Square 6: number of accept rental  -->
           <div class="col-4">
               <div class="card text-center text-white bg-secondary shadow-lg p-4">
-                  <h5>Placeholder</h5>
-                  <p class="display-4">--</p>
+                  <h5>Number of Accept rental</h5>
+                  <p class="display-4">{{acceptedRentalsCount}}</p>
               </div>
           </div>
       </div>
@@ -309,6 +309,49 @@
         </div>
       </div>
   </section>
+
+  <section class="return-container" *ngIf="showreturn">
+    <div class="mb-4">
+      <label for="customerId">Customer ID:</label>
+      <input 
+        type="number" 
+        id="customerId" 
+        [(ngModel)]="customerId" 
+        (keyup.enter)="fetchRentals()" 
+        class="form-control"
+        placeholder="Enter Customer ID" 
+        required
+      />
+    </div>
+    
+    <!-- Rentals Table -->
+    <table class="table table-striped" *ngIf="showTable">
+      <thead>
+        <tr>
+          <th>Rental ID</th>
+          <th>DVD Title</th>
+          <th>Rental Date</th>
+          <th>Return Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rental of rentals">
+          <td>{{ rental.rentalId }}</td>
+          <td>{{ rental.dvd?.title}}</td>
+          <td>{{ rental.rentalDate | date: 'short' }}</td>
+          <td>{{ rental.returnDate ? (rental.returnDate | date: 'short') : 'N/A' }}</td>
+          <td class="text-warning">{{ rental.status }}</td>
+          <td>
+            <button class="btn btn-success btn-sm" (click)="returnRental(rental.rentalId)">
+              Return
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>    
+</section>
 
 
 

@@ -138,7 +138,6 @@ this.loaddvds()
          this.showcomment = true;
        }
        profile(){
-
         this.resetSections();
            this.showprofile = true;
          }

@@ -9,7 +9,6 @@ import { Rental } from '../customer/customer.component';
 export class AdminService {
   constructor(private http:HttpClient) { }
   private baseUrl = 'http://localhost:5276/api/Rental'; // Base URL of your backend API
-
   getalldvds(){
     return this.http.get<DVD[]>('http://localhost:5276/api/Manager/GetAllDVDs')
   }
@@ -35,6 +34,29 @@ acceptRental(id: number) {
 rejectrental(id:number){
   return this.http.put(`${this.baseUrl}/RejectRental/${id}`,null)
 }
+
+getAcceptedRentalsCount() {
+  return this.http.get<{ count: number }>('http://localhost:5276/api/Rental/CountAcceptedRentals');
+}
+
+getReturnedRentalsCount() {
+  return this.http.get<{ count: number }>('http://localhost:5276/api/Rental/CountReturnedRentals');
+}
+
+getRejectedRentalsCount() {
+  return this.http.get<{ count: number }>('http://localhost:5276/api/Rental/CountRejectedRentals');
+}
+
+  // Fetch rentals by customer ID
+  getRentalsByCustomer(customerId: number){
+    return this.http.get<Rental[]>(`http://localhost:5276/api/Rental/GetRentalsByCustomer/${customerId}`);
+  }
+
+    // Process the return of a specific rental
+    returnRental(rentalId: number){
+      return this.http.put(`http://localhost:5276/api/Rental/ReturnRental/${rentalId}`, null);
+    }
+
 }
 
 

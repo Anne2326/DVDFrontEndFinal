@@ -288,11 +288,19 @@
                   <td class="text-warning">{{ rental.status }}</td>
                   <td>
                     <button 
-                      class="btn btn-sm btn-primary" 
-                      (click)="takeAction(rental)"
-                    >
-                      Take Action
-                    </button>
+    class="btn btn-sm btn-success p-1" 
+    (click)="acceptAction(rental.rentalId)"
+    title="Accept the rental request"
+  >
+    Accept
+  </button>
+  <button 
+    class="btn btn-sm btn-danger" 
+    (click)="rejectAction(rental.rentalId)"
+    title="Reject the rental request"
+  >
+    Reject
+  </button>
                   </td>
                 </tr>
               </tbody>

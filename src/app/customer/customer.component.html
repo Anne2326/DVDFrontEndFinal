@@ -1,26 +1,80 @@
-<nav class="navbar  border-bottom border-body" data-bs-theme="dark"
-  style="background: radial-gradient(circle,  rgb(17, 215, 245)40%,rgb(10, 2, 49)70%);">
+<nav
+  class="navbar border-bottom border-body"
+  data-bs-theme="dark"
+  style="
+    background: radial-gradient(
+      circle,
+      rgb(17, 215, 245) 40%,
+      rgb(10, 2, 49) 70%
+    );
+  "
+>
   <div class="container-fluid d-flex justify-content-between">
     <a class="navbar-brand d-flex" href="#">
-      <img src="reelbox1.jpg" alt="Logo" width="60" height="60" class="d-inline-block align-text-top" />
+      <img
+        src="reelbox1.jpg"
+        alt="Logo"
+        width="60"
+        height="60"
+        class="d-inline-block align-text-top"
+      />
       <h1>
         <span class="cine p-1">Cine</span>
         <span class="flex">Flix</span>
       </h1>
     </a>
     <div>
-      <button type="button" class="btn m-3"><i class="bi bi-bell-fill"></i></button>
-      <button id="btn" class="btn btn-outline-light" type="submit" [routerLink]="['']">LogOut</button>
-    </div>
+       <!-- Modal Trigger Button -->
+    <button
+    class="btn m-1"
+    data-bs-toggle="modal"
+    data-bs-target="#rentalHistoryModal"
+    (click)="rentalhistory()"
+  >
+  <i class="bi bi-graph-up-arrow"></i> Rentals History
+  </button>
 
+   <!-- Trigger Button -->
+<button
+class="btn"
+data-bs-toggle="modal"
+data-bs-target="#profileModal"
+(click)="fetchCustomerDetails()"
+>
+View Profile
+</button>
+      
+      <button type="button" class="btn m-3">
+        <i class="bi bi-bell-fill"></i>
+      </button>
+      <button
+        id="btn"
+        class="btn btn-outline-light"
+        type="submit"
+        [routerLink]="['/']"
+      >
+        LogOut
+      </button>
+    </div>
   </div>
 </nav>
 
 <main class="d-flex flex-nowrap">
-
-  <div class="d-flex flex-column flex-shrink-0 p-3  "
-    style="width: 280px ;    background: linear-gradient(to top, rgb(10, 2, 49)20%, rgb(17, 215, 245)120%);">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+  <div
+    class="d-flex flex-column flex-shrink-0 p-3"
+    style="
+      width: 280px;
+      background: linear-gradient(
+        to top,
+        rgb(10, 2, 49) 20%,
+        rgb(17, 215, 245) 120%
+      );
+    "
+  >
+    <a
+      href="/"
+      class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+    >
       <svg class="bi pe-none me-2" width="40" height="32">
         <use xlink:href="#bootstrap"></use>
       </svg>
@@ -39,71 +93,136 @@
         </button>
       </li>
       <li class="nav-item">
-        <button class="btn text-white m-4 fs-4" (click)="Rentals()">
-          <i class="bi bi-graph-up-arrow"></i> Rentals
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="btn text-white m-4 fs-4" (click)="profile()">
-          <i class="bi bi-people"></i> Profile
-        </button>
-      </li>
-      <li class="nav-item">
         <button class="btn text-white m-3 fs-3" (click)="comment()">
           <i class="bi bi-collection"></i> Comment
         </button>
       </li>
-
     </ul>
   </div>
   <!-- Home Page -->
 
   <div class="b-example-divider b-example-vr" style="height: 500px"></div>
-  <div style="width: 80%;height: 750px" class="shadow p-4 m-1 rounded" *ngIf="showdashboard">
-    <div class="container">
+  <div style="width: 80%; height: 750px" class="shadow p-4 m-1 rounded">
+    <div class="container" *ngIf="showdashboard">
       <div class="div d-flex">
-        <h1 style="color: rgb(10, 10, 52);">Trending Now</h1>
+        <h1 style="color: rgb(10, 10, 52)">Trending Now</h1>
 
-
-
-        <input type="search" id="form1" class="form-control bg-white" placeholder="Select Your Movie Here..."  [(ngModel)]="searchText"
-          style="width: 400px; margin-left: 400px;border-color: rgb(12, 12, 79);" />
+        <input
+          type="search"
+          id="form1"
+          class="form-control bg-white"
+          placeholder="Select Your Movie Here..."
+          [(ngModel)]="searchText"
+          style="
+            width: 400px;
+            margin-left: 400px;
+            border-color: rgb(12, 12, 79);
+          "
+        />
       </div>
     </div>
-    <br>
+    <br />
     <div class="Section">
-      <div class="card" style="width: 15rem;" *ngFor="let dvd of dvds">
-        <img 
-          class="card-img-top" 
-          [src]="'http://localhost:5276' + dvd.imageUrl" 
-          alt="{{ dvd.title }}" 
-        >
+      <div
+        class="card"
+        style="width: 15rem"
+        *ngFor="let dvd of dvds | filterDvd : searchText"
+      >
+        <img
+          class="card-img-top"
+          [src]="'http://localhost:5276' + dvd.imageUrl"
+          alt="{{ dvd.title }}"
+        />
         <div class="card-body">
-          <h3 class="card-title">{{ dvd.title }}</h3>
-          <b class="card-text text-danger">Available Copies: {{ dvd.copiesAvailable }}</b>
+          <h3 class="card-title">Title:{{ dvd.title }}</h3>
+          <p style="color: black">Director:{{ dvd.director }}</p>
+          <p style="color: black">Price:{{ dvd.price }}</p>
+          <p style="color: black">Genere:{{ dvd.genre }}</p>
+          <b class="card-text text-danger"
+            >Available Copies: {{ dvd.copiesAvailable }}</b
+          >
           <button class="btn2" (click)="Rent(dvd)">Rent Now</button>
         </div>
       </div>
+    </div>
 
-  </div>
+    <!--REVIEW-->
 
+    <!-- <div class="b-example-divider b-example-vr" style="height: 500px"></div> -->
+    <div class="container-fluid" *ngIf="showreview">
+      <h1 style="color: rgb(10, 10, 52); margin-left: 10px; margin-top: 50px">
+        Customer Review
+      </h1>
 
-  <!--REVIEW-->
-
-  <div class="b-example-divider b-example-vr" style="height: 500px"></div>
-  <div style="width: 85%;height: 750px" class="shadow  m-1 rounded " *ngIf="showreview">
-
-
-    <h1 style="color: rgb(10, 10, 52); margin-left: 10px;margin-top: 50px; ">Customer Review</h1>
-
-    <div class="div d-flex" id="reviews">
-      <div class="container ">
-        <div class="reviews-container">
+      <div class="div d-flex" id="reviews">
+        <div class="container">
+          <div class="reviews-container">
+            <div class="box">
+              <div class="rev-img">
+                <img
+                  src="OIP.jpg"
+                  alt=""
+                  style="border-radius: 50%; width: 150px; height: 150px"
+                />
+              </div>
+              <h3>Agassi Marriott Croos</h3>
+              <div class="stars">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-half"></i>
+              </div>
+              <p>
+                I love this DVD rental service because it offers a huge
+                selection of movies, including many hard-to-find classics. The
+                DVDs arrive on time, and they are in good condition. I also
+                appreciate their excellent customer support. If I ever have a
+                problem, they're quick to resolve it. My only complaint is that
+                they don’t always have the latest releases right away, but I can
+                usually find something to watch.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="container text-black">
           <div class="box">
             <div class="rev-img">
-              <img src="OIP.jpg" alt="" style="border-radius: 50%; width: 150px;height: 150px;">
+              <img
+                src=" OIP3.jpg"
+                alt=""
+                style="border-radius: 50%; width: 150px; height: 150px"
+              />
             </div>
-            <h3>Agassi Marriott Croos</h3>
+            <h3>Selventhiran AnneTharsana</h3>
+            <div class="stars">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+            <p>
+              As someone with a packed schedule, I don’t have time to stream
+              movies online or deal with buffering issues. Renting DVDs is
+              convenient for me because I can watch them at my own pace. I
+              really like that this service lets me keep the DVDs for a few days
+              before returning them. The downside is that the subscription plans
+              are a bit pricey, especially when I don’t always have time to
+              watch every movie I rent.
+            </p>
+          </div>
+        </div>
+        <div class="container text-black">
+          <div class="box">
+            <div class="rev-img">
+              <img
+                src="OIP2.jpg"
+                alt=""
+                style="border-radius: 50%; width: 150px; height: 150px"
+              />
+            </div>
+            <h3>Thusiyanthi</h3>
             <div class="stars">
               <i class="bi bi-star-fill"></i>
               <i class="bi bi-star-fill"></i>
@@ -111,226 +230,190 @@
               <i class="bi bi-star-fill"></i>
               <i class="bi bi-star-half"></i>
             </div>
-            <p>I love this DVD rental service because it offers a huge selection of movies, including many
-              hard-to-find classics. The DVDs arrive on time, and they are in good condition. I also
-              appreciate
-              their excellent customer support. If I ever have a problem, they're quick to resolve it. My only
-              complaint is that they don’t always have the latest releases right away, but I can usually find
-              something to watch. </p>
+            <p>
+              I’m not a huge movie fan, but I use the DVD rental service
+              occasionally when I want to have a movie night with friends or
+              family. The service is easy to use, and they have a decent
+              collection of popular titles. I wish there were more deals or
+              discounts for casual renters like me, but overall, it’s a
+              convenient option when I want to rent something.
+            </p>
           </div>
-
-        </div>
-
-      </div>
-      <div class="container text-black">
-        <div class="box">
-          <div class="rev-img">
-            <img src=" OIP3.jpg" alt="" style="border-radius: 50%; width: 150px;height: 150px;">
-          </div>
-          <h3> Selventhiran AnneTharsana</h3>
-          <div class="stars">
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-
-          </div>
-          <p>As someone with a packed schedule, I don’t have time to stream movies online or deal with
-            buffering
-            issues. Renting DVDs is convenient for me because I can watch them at my own pace. I really like
-            that this service lets me keep the DVDs for a few days before returning them. The downside is
-            that
-            the subscription plans are a bit pricey, especially when I don’t always have time to watch every
-            movie I rent. </p>
-        </div>
-
-      </div>
-      <div class="container text-black">
-        <div class="box">
-          <div class="rev-img">
-            <img src="OIP2.jpg" alt="" style="border-radius: 50%; width: 150px;height: 150px;">
-          </div>
-          <h3>Thusiyanthi </h3>
-          <div class="stars">
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-half"></i>
-          </div>
-          <p>I’m not a huge movie fan, but I use the DVD rental service occasionally when I want to have a
-            movie
-            night with friends or family. The service is easy to use, and they have a decent collection of
-            popular titles. I wish there were more deals or discounts for casual renters like me, but
-            overall,
-            it’s a convenient option when I want to rent something. </p>
         </div>
       </div>
     </div>
-  </div>
 
-
-  <!----Rentals-->
-  <div class="b-example-divider b-example-vr" style="height: 500px"></div>
-  <div style="width: 85%;height: 750px" class="shadow  m-1 rounded " *ngIf="showrental">
-
-
-      <div class="card shadow-lg mt-4" style="width: 1200px;height: 700px;">
-     <h1 style="color:rgb(10, 10, 31);">  Rental History</h1> 
-        <div class="card-body">
-          <table class="table table-striped"  >
-            <thead style="color:white;font-size:30px;background-color: black;" >
-              <tr >
-                <th>CustomerId</th>
-                <th>DVDId</th>
-                <th>RentalDate</th>
-                <th>ReturnDate</th>
-           
-                
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let rent of rentals">
-              
-                <td>{{ rent.title }}</td>
-                <td>{{ rent.director }}</td>
-                <td>{{ rent.releaseDate | date }}</td>
-                <td>{{ rent.category | date  }}</td>
-               
-                <td>
-                 
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <!----Rentals-->
    
+
+    <!-- Rental History Modal -->
+    <div
+      class="modal fade"
+      id="rentalHistoryModal"
+      tabindex="-1"
+      aria-labelledby="rentalHistoryModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="rentalHistoryModalLabel">
+              Rental History
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="card shadow-lg mt-2">
+              <div class="card-body">
+                <table class="table table-striped">
+                  <thead
+                    style="
+                      color: white;
+                      font-size: 20px;
+                      background-color: black;
+                    "
+                  >
+                    <tr>
+                      <th>Customer ID</th>
+                      <th>DVD title</th>
+                      <th>Rental Date</th>
+                      <th>Return Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let rent of rentals">
+                      <td>{{ rent.customerId }}</td>
+                      <td>{{ rent.dvd?.title }}</td>
+                      <td>{{ rent.rentalDate | date }}</td>
+                      <td>{{ rent.returnDate | date }}</td>
+                      <td class="text-warning">{{rent.status}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- This is for showing Customer details for admin like custoomer report -->
-
-  
-
-
-
-
-
   </div>
 
-  <!----Profile-->
-  <div class="b-example-divider b-example-vr" style="height: 500px"></div>
-  <div style="width: 85%;height: 750px" class="shadow  m-1 rounded " *ngIf="showprofile">
-    <div class="row" style="margin-left: 300px;">
-      <div class="div-form">
-        <div class="form-overlay">
-          <form [formGroup]="editProfile">
-            <h1>Sign Up</h1>
-            <div class=" p-3">
-              <input type="text" class="form-control text-white" id="exampleInputName" placeholder="UserName"
-                formControlName="username">
-              <div class="" *ngIf="editProfile.controls['username'].touched">
-                <p class="text-white fs-6" *ngIf="editProfile.controls['username'].hasError('required')">This
-                  Field is required </p>
-              </div>
-            </div>
-           
-           
-            <div class=" p-3">
-              <input type="text" class="form-control" id="exampleInputPhone" placeholder="MobileNumber"
-                formControlName="phonenumber">
-              <div class="" *ngIf="editProfile.controls['phonenumber'].touched">
-                <p class="text-white fs-6" *ngIf="editProfile.controls['phonenumber'].hasError('required')">This
-                  Field is required </p>
-                <p class="text-white fs-6" *ngIf="editProfile.controls['password'].hasError('minlength')">
-                  Phonenumber should contain 10 characters.
-                </p>
-                <p class="text-white fs-6" *ngIf="editProfile.controls['password'].hasError('maxlength')">
-                  Phonenumber should contain 10 characters.
-                </p>
-              </div>
-            </div>
-            <div class=" p-3">
-              <input type="text" class="form-control" id="exampleInputNIC" placeholder="NIC" formControlName="nic">
-              <div class="" *ngIf="editProfile.controls['nic'].touched">
-                <p class="text-white fs-6" *ngIf="editProfile.controls['nic'].hasError('required')">This Field is
-                  required </p>
-                <p class="text-white fs-6" *ngIf="editProfile.controls['nic'].hasError('minlength')">
-                  NIC should contain 10 characters.
-                </p>
-                <p class="text-white fs-6" *ngIf="editProfile.controls['nic'].hasError('maxlength')">
-                  NIC should contain 10 characters.
-                </p>
-              </div>
-            </div>
-            <div class=" p-3 ">
-              <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email"
-                formControlName="email">
-              <div class="" *ngIf="editProfile.controls['email'].touched">
-                <p class="text-white fs-6" *ngIf="editProfile.controls['email'].hasError('required')">This Field is
-                  required </p>
-                <p class="text- fs-6" *ngIf="editProfile.controls['email'].hasError('emailNoAt')">
-                  Email must contain the &#64; symbol.
-                </p>
-              </div>
-            </div>
-            <div class=" p-3">
-              <button type="submit" class="btn-signin" (click)="onEdit()" [disabled]="editProfile.invalid">Update
-                </button>
-            </div>
 
-          </form>
-        </div>
-      </div>
 
+<!-- Profile Modal -->
+<div
+class="modal fade"
+id="profileModal"
+tabindex="-1"
+aria-labelledby="profileModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="profileModalLabel">
+      </h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
     </div>
+    <div class="modal-body">
 
+      <form [formGroup]="editProfile" (ngSubmit)="onSubmit()">
+        <div class="form-group mb-3">
+          <label for="id" class="form-label">Customer-Id:</label>
+          <input
+            type="text"
+            id="id"
+            class="form-control"
+            formControlName="id"
+          />
+        </div>
+        
+
+        <div class="form-group mb-3">
+          <label for="username" class="form-label">Username: </label>
+          <input
+            type="text"
+            id="username"
+            class="form-control"
+            formControlName="userName"
+            placeholder="Enter username"
+          />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="email" class="form-label">Email: </label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            formControlName="email"
+            placeholder="Enter email"
+          />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="phonenumber" class="form-label">Phone Number: </label>
+          <input
+            type="text"
+            id="phonenumber"
+            class="form-control"
+            formControlName="phoneNumber"
+            placeholder="Enter phone number"
+          />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="nic" class="form-label">NIC: </label>
+          <input
+            type="text"
+            id="nic"
+            class="form-control"
+            formControlName="nic"
+            placeholder="Enter NIC"
+          />
+        </div>
+
+        <!-- <button
+          type="submit"
+          class="btn btn-primary w-100"
+          [disabled]="editProfile.invalid"
+        >
+          Update Profile
+        </button> -->
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+      >
+        Close
+      </button>
+    </div>
   </div>
-
-
-
-
-
-
-
-
-
-  
-  <!----Comment-->
-  <div class="b-example-divider b-example-vr" style="height: 500px"></div>
-  <div style="width: 85%;height: 750px" class="shadow  m-1 rounded " *ngIf="showcomment">
-    <label for="floatingTextarea" class="fs-3 m-5" style="font-weight: bold;"> You Can Write A Comment Here......</label>
-    <div class="form-floating " >
-      <div class="button-type">
-        <button type="button" class="btn btn-info">Add Comments</button>
-      </div><br>
-     
-      <!-- <textarea class="form-control m-5" style="width: 1000px; border-color: rgb(2, 2, 16);height: 400px; "
-        id="floatingTextarea"></textarea> -->
-        <div class="speech-bubble">
-          <div class="lines">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-          </div>
-        </div><br>
-        <div class="speech-bubble">
-          <div class="lines">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-          </div>
-        </div><br>
-
-      </div>
-     
-     
-
-
-
-
-
-
-
-
-
+</div>
+</div>
+</main>

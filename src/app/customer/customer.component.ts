@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from '../Services/customer.service';
@@ -9,22 +15,19 @@ import { DVD } from '../layout/admin/admin.component';
 function emailContainsAt(control: AbstractControl) {
   const email = control.value;
   if (email && !email.includes('@')) {
-    return { emailNoAt: true };  // Return error if '@' is missing
+    return { emailNoAt: true }; // Return error if '@' is missing
   }
-  return null;  // Return null if validation passes
-
-
-
+  return null; // Return null if validation passes
 }
 
 export interface Customer {
   id: number; // Unique identifier for the customer
-  userName:string;
-  phoneNumber:string;
+  userName: string;
+  phoneNumber: string;
   email: string;
-   nic: string;// National ID card number
+  nic: string; // National ID card number
   password: string;
-  Role:string; // Password for the customer account
+  Role: string; // Password for the customer account
   rentals?: Rental[]; // Collection of rentals (optional)
   isActive?: boolean; // Indicates if the customer is active (optional)
 }
@@ -36,211 +39,239 @@ export interface Rental {
   rentalDate: Date; // Date when the rental was created
   returnDate?: Date; // Optional: Date when the rental was returned
   isOverdue?: boolean; // Optional: Indicates if the rental is overdue (defaults to false)
-  status: string; 
-  customer?:Customer;
-  dvd?:DVD;
+  status: string;
+  customer?: Customer;
+  dvd?: DVD;
   // Status of the rental (e.g., "Pending")
 }
-
-
-
-
-
-
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  styleUrl: './customer.component.css'
+  styleUrl: './customer.component.css',
 })
-
-
-
-
-
-
 export class CustomerComponent implements OnInit {
 
-   editProfile:FormGroup;
-   
-  searchText:string = '';
+  onSubmit() {
+    throw new Error('Method not implemented.');
+  }
 
-   rentals: any[]=[];
-   dvds: DVD[]=[];
-   customers: any[]=[];
+  editProfile: FormGroup;
 
+  searchText: string = '';
 
-  showdashboard=true
+  rentals: Rental[] = [];
+  dvds: DVD[] = [];
+  customers: Customer[] = [];
+
+  customerid: number = 0;
+
+  showdashboard = true;
   showreview = false;
-  showrental=false;
+  showrental = false;
   showprofile = false;
   showcomment = false;
 
- 
-
-    constructor(private fb: FormBuilder, private  toastr: ToastrService,private router:Router,private customerservice: CustomerService,private dvdservice:AdminService) {
-      this.editProfile = new FormGroup({
-        username: new FormControl(""),
-      
-        phonenumber: new FormControl(""),
-        nic: new FormControl(""),
-        email: new FormControl(""),
-      })
-    }
-
-    ngOnInit(): void {
-this.loaddvds()
-      this.editProfile = this.fb.group({
-  
-  
-        username: ['', Validators.required],
-  
-
-        phonenumber: ['', [Validators.required,
-       
-        Validators.maxLength(10),
-        Validators.minLength(10) //this validation not display in users check that
-  
-        ]],
-        nic: ['', [Validators.required,
-        Validators.maxLength(10),
-        Validators.minLength(10)
-        ]
+  constructor(
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private router: Router,
+    private customerservice: CustomerService,
+    private dvdservice: AdminService
+  ) {
+    this.editProfile = this.fb.group({
+      id:[],
+      userName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phoneNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
         ],
-  
-        email: ['', [Validators.required,
-          emailContainsAt
-        ]]
-  
-      })
-  
+      ],
+      nic: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+        ],
+      ],
+    });
+  }
 
-    }
+  ngOnInit(): void {
+    this.loaddvds();
+    this.editProfile = this.fb.group({
+      id:[],
+      userName: ['', Validators.required],
 
+      phoneNumber: [
+        '',
+        [
+          Validators.required,
 
+          Validators.maxLength(10),
+          Validators.minLength(10), //this validation not display in users check that
+        ],
+      ],
+      nic: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(10),
+          Validators.minLength(10),
+        ],
+      ],
 
+      email: ['', [Validators.required, emailContainsAt]],
+    });
+  }
 
   customerhomepage() {
-      this.resetSections();
-      this.showdashboard = true;
-    this.loaddvds()
-      
+    this.resetSections();
+    this.showdashboard = true;
+    this.loaddvds();
+  }
+
+  review() {
+    this.resetSections();
+    this.showreview = true;
+  }
+  comment() {
+    this.resetSections();
+    this.showcomment = true;
+  }
+
+  profile() {
+    this.resetSections();
+    console.log('hi show profile');
+    this.showprofile = true;
+  }
+
+  Rentals() {
+    this.resetSections();
+    this.showrental = true;
+  }
+
+  resetSections() {
+    this.showreview = false;
+    this.showprofile = false;
+    this.showcomment = false;
+    this.showdashboard = false;
+    this.showrental = false;
+  }
+
+  onEdit() {
+    if (this.editProfile.valid) {
+      this.toastr.success(' Edit Your Form Successfully', 'Success');
+    } else {
+      this.toastr.error('Please fill in the form correctly', 'Error');
     }
+  }
 
-    review(){
-
-   this.resetSections();
-      this.showreview = true;
-    }
-    comment(){
-
-      this.resetSections();
-         this.showcomment = true;
-       }
-       profile(){
-        this.resetSections();
-           this.showprofile = true;
-         }
-     Rentals(){
-
-          this.resetSections();
-             this.showrental = true;
-           
-           }
-
-    resetSections() {
-      this.showreview = false;
-      this.showprofile = false;
-      this.showcomment = false;
-      this.showdashboard=false;
-      this.showrental = false;
-    }
-
-
-
-    onEdit() {
-      if (this.editProfile.valid) {
-        
-        this.toastr.success(" Edit Your Form Successfully", "Success");
-  
-     
-      } else {
-        
-        this.toastr.error("Please fill in the form correctly", "Error");
-      }
-    }
-  
-    Rent(dvd: DVD) {
-      const getcustomer = localStorage.getItem('customer'); // Retrieve the customer from localStorage
-      console.log(getcustomer)
-      let cusId: number ; // Initialize cusId
-      
-      if (getcustomer) {
-        try {
-          const customer = JSON.parse(getcustomer);
-          console.log(customer.Id) // Parse the JSON string to an object
-          if (customer.Id) {
-            cusId = +customer.Id; // Assign the ID to cusId
-            console.log(cusId)
-          } else {
-            this.toastr.error('Invalid customer data.', 'Error');
-            return;
-          }
-        } catch (error) {
-          console.error('Error parsing customer data from localStorage:', error);
-          this.toastr.error('Failed to retrieve customer information.', 'Error');
-          return;
+  rentalhistory() {
+    const getcustomer = localStorage.getItem('customer'); // Retrieve the customer from localStorage
+    if (getcustomer) {
+      try {
+        const customer = JSON.parse(getcustomer);
+        console.log(customer.Id); // Parse the JSON string to an object
+        if (customer.Id) {
+          this.customerid = +customer.Id; // Assign the ID to cusId
+          console.log(this.customerid);
         }
-      } else {
-        this.toastr.error('You must be logged in to rent a DVD.', 'Error');
+      } catch (error) {
+        console.error('Error parsing customer data from localStorage:', error);
+        this.toastr.error('Failed to retrieve customer history.', 'Error');
         return;
       }
-    
-        // Validate if the DVD has copies available
-  if (dvd.copiesAvailable <= 0) {
-    this.toastr.error(`The DVD "${dvd.title}" is out of stock and cannot be rented.`, 'Error');
-    return;
+    }
+    this.customerservice.getrentalbycus(this.customerid).subscribe(data=>{
+      this.rentals=data
+    })
   }
-  
-      // Construct the rental request
-      const rentalRequest = {
-        customerId: cusId, // Use the assigned customer ID
-        dvdId: dvd.id,
-        rentalDate: new Date().toISOString()
-      };
-    
-      // Call the service to handle the rental request
-      this.customerservice.addrental(rentalRequest).subscribe({
-        next: (response) => {
-          console.log('Rental successful:', response);
-          this.toastr.success('Rent Successful!', 'Success');
-        },
-        error: (error) => {
-          console.error('Error during rental:', error);
-          this.toastr.error('Failed to rent DVD. Please try again.', 'Error');
+  Rent(dvd: DVD) {
+    const getcustomer = localStorage.getItem('customer'); // Retrieve the customer from localStorage
+    console.log(getcustomer);
+    let cusId: number; // Initialize cusId
+
+    if (getcustomer) {
+      try {
+        const customer = JSON.parse(getcustomer);
+        console.log(customer.Id); // Parse the JSON string to an object
+        if (customer.Id) {
+          cusId = +customer.Id; // Assign the ID to cusId
+          console.log(cusId);
+        } else {
+          this.toastr.error('Invalid customer data.', 'Error');
+          return;
         }
-      });
-    }
-    
-    
-    
-    loaddvds(){
-      this.dvdservice.getalldvds().subscribe((data)=>{
-        this.dvds=data;
-        console.log(this.dvds)
-      })
-    }
+      } catch (error) {
+        console.error('Error parsing customer data from localStorage:', error);
+        this.toastr.error('Failed to retrieve customer information.', 'Error');
+        return;
+      }
+    } else {
+      this.toastr.error('You must be logged in to rent a DVD.', 'Error');
+      return;
     }
 
+    // Validate if the DVD has copies available
+    if (dvd.copiesAvailable <= 0) {
+      this.toastr.error(
+        `The DVD "${dvd.title}" is out of stock and cannot be rented.`,
+        'Error'
+      );
+      return;
+    }
 
+    // Construct the rental request
+    const rentalRequest = {
+      customerId: cusId, // Use the assigned customer ID
+      dvdId: dvd.id,
+      rentalDate: new Date().toISOString(),
+    };
 
-  
+    // Call the service to handle the rental request
+    this.customerservice.addrental(rentalRequest).subscribe({
+      next: (response) => {
+        console.log('Rental successful:', response);
+        this.toastr.success('Rent Successful!', 'Success');
+      },
+      error: (error) => {
+        console.error('Error during rental:', error);
+        this.toastr.error('Failed to rent DVD. Please try again.', 'Error');
+      },
+    });
+  }
 
+  fetchCustomerDetails() {
+    const getcustomer = localStorage.getItem('customer'); // Retrieve the customer from localStorage
+    if (getcustomer) {
+      try {
+        const customer = JSON.parse(getcustomer);
+        console.log(customer.Id); // Parse the JSON string to an object
+        if (customer.Id) {
+          this.customerid = +customer.Id; // Assign the ID to cusId
+          console.log(this.customerid);
+        }
+      } catch (error) {
+        console.error('Error parsing customer data from localStorage:', error);
+        this.toastr.error('Failed to retrieve customer history.', 'Error');
+        return;
+      }
+    }
+    this.customerservice.getsinglecus(this.customerid).subscribe(data=>{
+      this.editProfile.patchValue(data)
+      console.log(data)
+    })
+    }
 
-
-
-
-
-
-
-
+  loaddvds() {
+    this.dvdservice.getalldvds().subscribe((data) => {
+      this.dvds = data;
+    });
+  }
+}

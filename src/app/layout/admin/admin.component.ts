@@ -76,6 +76,13 @@ customerId: number=0;
   homepage() {
     this.resetSections();
     this.showdashboard = true;
+    this.loadcustomers();
+    this.loaddvds();
+    this.getrentals();
+    this.loadAcceptedRentalsCount();
+    this.loadRejectedRentalsCount();
+    this.loadReturnedRentalsCount(); 
+
   }
 
   customersShow() {
@@ -104,9 +111,11 @@ customerId: number=0;
     this.resetSections()
     this.showreturn=true
   }
+
   overdueShow() {
     throw new Error('Method not implemented.');
   }
+
   displayRentals() {
     this.resetSections();
     this.showrental = true;
@@ -176,8 +185,9 @@ customerId: number=0;
     });
   }
 
-  editDvd(arg0: any) {
-    throw new Error('Method not implemented.');
+  editDvd(id:number) {
+    this.router.navigate(['/admin/Edit',id])
+     
   }
   deleteDvd(id: number) {
     if (confirm('Do you want to delete?')) {

@@ -13,10 +13,18 @@ export class AdminService {
     return this.http.get<DVD[]>('http://localhost:5276/api/Manager/GetAllDVDs')
   }
 
+  getsingledvd(id:number){
+    return this.http.get('http://localhost:5276/api/Manager/'+id)
+  }
+
+
   createdvd(dvd:FormData){
     return this.http.post('http://localhost:5276/api/Manager/AddDVD',dvd)
   }
 
+  updateDvd(data: any) {
+    return this.http.patch(`http://localhost:5276/api/Manager/${data.id}`, data);
+  }
   deletedvd(id:number){
     return this.http.delete('http://localhost:5276/api/Manager/'+id)
   }

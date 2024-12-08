@@ -20,6 +20,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { FilterCusPipe } from './pipes/filter-cus.pipe';
 import { FilterDvdPipe } from './pipes/filter-dvd.pipe';
 import { PendingFilPipe } from './pipes/pending-fil.pipe';
+import { EditdvdComponent } from './layout/admin/editdvd/editdvd.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { PendingFilPipe } from './pipes/pending-fil.pipe';
     FilterCusPipe,
     FilterDvdPipe,
     PendingFilPipe,
+    EditdvdComponent,
   ],
   imports: [
     BrowserModule,

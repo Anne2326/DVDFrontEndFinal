@@ -6,6 +6,7 @@ import { ReviewComponent } from './review/review.component';
 import { CustomerComponent } from './customer/customer.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './layout/admin/admin.component';
+import { EditdvdComponent } from './layout/admin/editdvd/editdvd.component';
 
 const routes: Routes = [
   {
@@ -25,12 +26,17 @@ const routes: Routes = [
         component: RegisterComponent
       },
       {path: 'customer', component: CustomerComponent },
-      { path: 'admin', component: AdminComponent },
+      { path: 'admin', component: AdminComponent ,
+        children:[{
+          path:'Edit/:id',
+          component:EditdvdComponent
+        }]
+      },
      
 
 
     ]
-    // change this
+   
 
   }
 

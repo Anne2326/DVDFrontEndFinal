@@ -1,0 +1,60 @@
+<div class="modal fade" id="editDvdModal" tabindex="-1" aria-labelledby="editDvdModalLabel" aria-hidden="true" #editDvdModal>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editDvdModalLabel">Edit DVD</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editDvdForm" (ngSubmit)="updateDvd()">
+            <div class="mb-3">
+              <label for="title" class="form-label">Title:</label>
+              <input
+                formControlName="title"
+                type="text"
+                class="form-control"
+                placeholder="Enter DVD Title"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="price" class="form-label">Price:</label>
+              <input
+                formControlName="price"
+                type="number"
+                class="form-control"
+                placeholder="Enter Price"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="copiesAvailable" class="form-label">Copies Available:</label>
+              <input
+                formControlName="copiesAvailable"
+                type="number"
+                class="form-control"
+                placeholder="Enter Copies Available"
+              />
+            </div>
+            <!-- Disabled fields -->
+            <div class="mb-3">
+              <label for="director" class="form-label">Director:</label>
+              <input
+                formControlName="director"
+                type="text"
+                class="form-control"                
+              />
+            </div>
+            <div class="mb-3">
+              <label for="genre" class="form-label">Genre:</label>
+              <input
+                formControlName="genre"
+                type="text"
+                class="form-control"
+              />
+            </div>
+            <button type="submit" class="btn btn-success">Update DVD</button>
+          </form>          
+        </div>
+      </div>
+    </div>
+  </div>
+  

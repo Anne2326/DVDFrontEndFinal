@@ -38,8 +38,6 @@ export class CustomerService {
 
 
   isLoggedIn(){
-
-
     if(localStorage.getItem('token')){
 
       const token=localStorage.getItem('token');

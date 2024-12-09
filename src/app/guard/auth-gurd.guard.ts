@@ -14,7 +14,7 @@ canActivate():boolean{
   }
   else{
     this.router.navigate(['/login']);
-    return false;
+  return false
   }
 }
 

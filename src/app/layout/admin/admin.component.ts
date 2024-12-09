@@ -212,7 +212,9 @@ returnRental(rentalId: number) {
       (response) => {
           console.log('Rental returned successfully', response);
           this.toastr.success('DVD returned successfully');
-          this.router.navigate(['/admin'])
+          setTimeout(() => {
+            this.router.navigate(['/admin']);
+        }, 0);
       },
       (error) => {
           console.error('Error returning rental', error);
@@ -294,7 +296,7 @@ returnRental(rentalId: number) {
           this.showTable = true;
         },
         error: (err) => {
-          this.toastr.error(err.error.message || 'rentalid is invalid');
+          this.toastr.error(err.error.message || 'no rentals found for the provided Customerid  Or Alredy returned.');
           this.showTable = false;
         },
       });

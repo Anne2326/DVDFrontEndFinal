@@ -274,4 +274,14 @@ export class CustomerComponent implements OnInit {
       this.dvds = data;
     });
   }
+
+  logout(){
+     // Remove session-specific data
+  localStorage.removeItem('token');
+  localStorage.removeItem('customer');
+
+  console.log('Logged out, but customer and token are preserved.');
+
+    this.router.navigate(['/'])
+  }
 }

@@ -7,6 +7,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './layout/admin/admin.component';
 import { EditdvdComponent } from './layout/admin/editdvd/editdvd.component';
+import { authGurdGuard } from './guard/auth-gurd.guard';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
         path: 'register',
         component: RegisterComponent
       },
-      {path: 'customer', component: CustomerComponent },
+      
+      {path: 'customer', component: CustomerComponent},
       { path: 'admin', component: AdminComponent ,
         children:[{
           path:'Edit/:id',

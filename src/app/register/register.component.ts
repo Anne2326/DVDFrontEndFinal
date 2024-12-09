@@ -76,35 +76,42 @@ export class RegisterComponent implements OnInit {
 
   }
 
+  // 
+  
+
   onSubmit() {
     if (this.loginForm.valid) {
-    console.log(this.loginForm.value);;
-    
-
-      this.customerservice.customerregister(this.loginForm.value).subscribe(data=>{
-
-        console.log(data);
-        this.toastr.success("Form Submitted", "Success");
-        this.router.navigate(['/customer']);
-        if(data){
-    localStorage.setItem('token',data.custokken);
-    const decoded:any=jwtDecode(data.custokken);
-    localStorage.setItem('customer',JSON.stringify(decoded));
-
+      console.log(this.loginForm.value);
+  
+      this.customerservice.customerregister(this.loginForm.value).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.toastr.success("Form Submitted", "Success");
+  
+          // Save token and user info to localStorage
+          if (data) {
+            localStorage.setItem('token', data.custokken);
+            const decoded: any = jwtDecode(data.custokken);
+            localStorage.setItem('customer', JSON.stringify(decoded));
+          }
+  
+          // Redirect to login page after successful registration
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          console.error(err);
+  
+          // Show error message if the backend throws an exception
+          if (err.error && err.error.details) {
+            // Handle the backend error response (assuming it's in `details` field)
+            this.toastr.error(err.error.details, "Error");
+          } else {
+            // Handle unexpected errors
+            this.toastr.error("Something went wrong. Please try again later.", "Error");
+          }
         }
-      })
-     
-   
-     
-      
+      });
     } 
   }
-
-
-
-
-
-
-
-
+  
 }

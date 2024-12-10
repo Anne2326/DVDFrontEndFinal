@@ -57,6 +57,8 @@ export class CustomerComponent implements OnInit {
   }
 
   editProfile: FormGroup;
+  isDisabled = false;
+  fulldisabled=true;
 
   searchText: string = '';
 
@@ -104,30 +106,16 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
     this.loaddvds();
-    this.editProfile = this.fb.group({
-      id:[],
-      userName: ['', Validators.required],
-
-      phoneNumber: [
-        '',
-        [
-          Validators.required,
-
-          Validators.maxLength(10),
-          Validators.minLength(10), //this validation not display in users check that
-        ],
-      ],
-      nic: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(10),
-          Validators.minLength(10),
-        ],
-      ],
-
-      email: ['', [Validators.required, emailContainsAt]],
-    });
+    
+      this.editProfile = this.fb.group({
+        id: [{ value: '', disabled: true }],
+        userName: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+        nic: [{ value: '', disabled: true }],
+      });
+    
+      this.fetchCustomerDetails()
   }
 
  
@@ -177,6 +165,7 @@ export class CustomerComponent implements OnInit {
     }
     this.customerservice.getrentalbycus(this.customerid).subscribe(data=>{
       this.rentals=data
+      console.log(this.rentals)
     })
   }
   Rent(dvd: DVD) {
@@ -251,9 +240,35 @@ export class CustomerComponent implements OnInit {
       }
     }
     this.customerservice.getsinglecus(this.customerid).subscribe(data=>{
-      this.editProfile.patchValue(data)
+      this.editProfile.patchValue(data);
       console.log(data)
     })
+    }
+
+    enableEdit() {
+      this.isDisabled = true;
+      this.editProfile.get('userName')?.enable();
+      this.editProfile.get('email')?.enable();
+      this.editProfile.get('phoneNumber')?.enable();
+    }
+
+    onSaveDetails() {
+      if (this.editProfile.valid) {
+        const profileData = this.editProfile.getRawValue();
+        this.customerservice.updateCustomerProfile(profileData).subscribe(
+          (response) => {
+            this.toastr.success('Profile updated successfully!');
+            this.isDisabled = true;
+          },
+          (error) => {
+            if (error.status === 400) {
+              this.toastr.warning('Username or Email already exists.');
+            } else {
+              this.toastr.warning('An error occurred. Please try again.');
+            }
+          }
+        );
+      }
     }
 
   loaddvds() {

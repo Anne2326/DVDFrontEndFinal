@@ -13,7 +13,7 @@
     </div>
   </div>
   <br />
-  <div class="Section">
+  <!-- <div class="Section">
     <div class="card" style="width: 15rem" *ngFor="let dvd of dvds | filterDvd : searchText">
       <img class="card-img-top" [src]="'http://localhost:5276' + dvd.imageUrl" alt="{{ dvd.title }}" />
       <div class="card-body">
@@ -25,4 +25,47 @@
         <button class="btn2" (click)="Rent(dvd)">Rent Now</button>
       </div>
     
-    </div> 
+    </div>  -->
+
+    <div class="Section">
+      <div class="card" style="width: 15rem" *ngFor="let dvd of dvds | filterDvd : searchText">
+        <img class="card-img-top" [src]="'http://localhost:5276' + dvd.imageUrl" alt="{{ dvd.title }}" />
+        <div class="card-body">
+          <h3 class="card-title fs-4">{{ dvd.title }}</h3>
+          <p style="color: rgb(4, 2, 16);font-size: 20px;">Director: {{ dvd.director }}</p>
+          <p style="color: black;font-size: 20px;">Price: {{ dvd.price }}</p>
+          <p style="color: black;font-size: 20px;">Genre: {{ dvd.genre }}</p>
+          <b class="card-text text-danger fs-5">Available Copies: {{ dvd.copiesAvailable }}</b>
+          <button class="btn2" (click)="openRentModal(dvd)">Rent Now</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal for DVD Details -->
+    <div class="modal fade" id="rentModal" tabindex="-1" aria-labelledby="rentModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="rentModalLabel">Movie_Name{{ selectedDvd?.title }} - Rent Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div *ngIf="selectedDvd">
+              <img [src]="'http://localhost:5276' + selectedDvd.imageUrl" class="img-fluid" alt="DVD Image" />
+              <p><strong>Title:</strong>{{ selectedDvd?.title }} </p>
+              <p><strong>Director:</strong> {{ selectedDvd.director }}</p>
+              <p><strong>Price:</strong> {{ selectedDvd.price }}</p>
+              <p><strong>Genre:</strong> {{ selectedDvd.genre }}</p>
+              <p><strong>Available Copies:</strong> {{ selectedDvd.copiesAvailable }}</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="Rent(selectedDvd)">Confirm Rent</button>
+            <button type="button" class="btn btn-outline-danger" (click)="addToFavorites()">
+              <i class="bi bi-heart"></i> Add to Favorites
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    

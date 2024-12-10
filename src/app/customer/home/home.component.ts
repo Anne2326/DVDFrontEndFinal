@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
 import { CustomerService } from '../../Services/customer.service';
 import { AdminService } from '../../Services/admin.service';
 
+
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -14,7 +17,7 @@ import { AdminService } from '../../Services/admin.service';
 })
 export class HomeComponent implements OnInit {
   dvds: DVD[] = [];
-
+  selectedDvd!: DVD;
   searchText: string = '';
   rentals: Rental[] = [];
   constructor(
@@ -75,6 +78,7 @@ export class HomeComponent implements OnInit {
       next: (response) => {
         console.log('Rental successful:', response);
         this.toastr.success('Rent Successful!', 'Success');
+        this.closeModal()
       },
       error: (error) => {
         console.error('Error during rental:', error);
@@ -90,7 +94,27 @@ export class HomeComponent implements OnInit {
   }
 
 
+// This function is called when the "Rent Now" button is clicked
+openRentModal(dvd: DVD): void {
+  this.selectedDvd = dvd; // Set the selected DVD
+  // Open the modal (use Bootstrap Modal methods if needed, depending on your setup)
+  const modal = new bootstrap.Modal(document.getElementById('rentModal')!);
+  modal.show();
 }
+addToFavorites(): void {
+  this.toastr.info('The movie has been added to your favorites!', 'Added to Favorites');
+  this.closeModal();
+}
+
+// Close the modal after an action
+closeModal(): void {
+  const modal = new bootstrap.Modal(document.getElementById('rentModal')!);
+  modal.hide();
+}
+
+
+}
+
 export interface Rental {
   rentalId: number; // Unique identifier for the rental
   customerId: number; // ID of the customer who rented the DVD

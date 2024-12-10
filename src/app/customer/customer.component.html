@@ -20,7 +20,7 @@
         <i class="bi bi-plus-circle"></i> Review
       </button>
       <button class="btn text-white m-4 fs-4" data-bs-toggle="modal" data-bs-target="#rentalHistoryModal"
-      (click)="Rentals()">
+      (click)="rentalhistory()">
         <i class="bi bi-graph-up-arrow"></i> Rentals History
       </button>
 
@@ -80,8 +80,8 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let rent of rentals">
-                        <td class="text-dark fs-4">{{ rent.customerId }}</td>
-                        <td class="fs-4">{{ rent.dvd?.title }}</td>
+                        <td class="text-dark fs-4">{{ rent.customer?.id}}</td>
+                        <td class="fs-4">{{ rent.dvd?.title}}</td>
                         <td class="text-dark fs-4">{{ rent.rentalDate | date }}</td>
                         <td class="text-dark fs-4">{{ rent.returnDate | date }}</td>
                         <td class="text-warning fs-4">{{rent.status}}</td>
@@ -100,7 +100,7 @@
         </div>
       </div>
 
-      <!-- This is for showing Customer details for admin like custoomer report -->
+      <!-- This is for showing Customer details for admin like customer report -->
   
 
     <!-- Profile Modal -->
@@ -108,60 +108,108 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title text-primary-emphasis" id="profileModalLabel" >Edit Profile</h1>
+            <h1 class="modal-title text-primary-emphasis" id="profileModalLabel">Edit Profile</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="row">
               <!-- Form Section -->
               <div class="col-md-6">
-                <form [formGroup]="editProfile" (ngSubmit)="onSubmit()">
+                <form [formGroup]="editProfile" (ngSubmit)="onSaveDetails()">
                   <div class="form-group mb-3">
                     <label for="id" class="form-label">Customer-Id:</label>
-                    <input type="text" id="id" class="form-control" formControlName="id" />
+                    <input
+                      type="text"
+                      id="id"
+                      class="form-control"
+                      formControlName="id"
+                      [disabled]="fulldisabled"
+                    />
                   </div>
-
+    
                   <div class="form-group mb-3">
                     <label for="username" class="form-label">Username: </label>
-                    <input type="text" id="username" class="form-control" formControlName="userName"
-                      placeholder="Enter username" />
+                    <input
+                      type="text"
+                      id="username"
+                      class="form-control"
+                      formControlName="userName"
+                      placeholder="Enter username"
+                      [disabled]="isDisabled"
+                    />
                   </div>
-
+    
                   <div class="form-group mb-3">
                     <label for="email" class="form-label">Email: </label>
-                    <input type="email" id="email" class="form-control" formControlName="email"
-                      placeholder="Enter email" />
+                    <input
+                      type="email"
+                      id="email"
+                      class="form-control"
+                      formControlName="email"
+                      placeholder="Enter email"
+                      [disabled]="isDisabled"
+                    />
                   </div>
-
+    
                   <div class="form-group mb-3">
                     <label for="phonenumber" class="form-label">Phone Number: </label>
-                    <input type="text" id="phonenumber" class="form-control" formControlName="phoneNumber"
-                      placeholder="Enter phone number" />
+                    <input
+                      type="text"
+                      id="phonenumber"
+                      class="form-control"
+                      formControlName="phoneNumber"
+                      placeholder="Enter phone number"
+                      [disabled]="isDisabled"
+                    />
                   </div>
-
+    
                   <div class="form-group mb-3">
                     <label for="nic" class="form-label">NIC: </label>
-                    <input type="text" id="nic" class="form-control" formControlName="nic" placeholder="Enter NIC" />
+                    <input
+                      type="text"
+                      id="nic"
+                      class="form-control"
+                      formControlName="nic"
+                      placeholder="Enter NIC"
+                      [disabled]="fulldisabled"
+                    />
                   </div>
-
-                  <button type="submit" class="btn btn-primary w-100" [disabled]="editProfile.invalid">
-                    Update Profile
+    
+                  <button
+                    type="button"
+                    class="btn btn-primary w-100 mb-2"
+                    *ngIf="isDisabled"
+                    (click)="enableEdit()"
+                  >
+                    Update Details
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary w-100"
+                    *ngIf="!isDisabled"
+                    [disabled]="editProfile.invalid"
+                  >
+                    Save Details
                   </button>
                 </form>
               </div>
-
-           <!-- Image Section -->
+    
+              <!-- Image Section -->
               <div class="col-md-6 text-center">
-                <!-- Align content using flexbox -->
                 <div class="d-flex flex-column align-items-center">
-                  <!-- Title -->
                   <h1 class="mb-3">Profile</h1>
-                  <!-- Image -->
-                  <img src="../../../th.jpeg" alt="Profile Image" class="img-fluid rounded mb-3"
-                    style="max-height: 150px; width: auto;" />
-                  <!-- Modal Trigger Button -->
-                  <button class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#rentalHistoryModal"
-                    (click)="rentalhistory()">
+                  <img
+                    src="../../../th.jpeg"
+                    alt="Profile Image"
+                    class="img-fluid rounded mb-3"
+                    style="max-height: 150px; width: auto;"
+                  />
+                  <button
+                    class="btn btn-primary m-1"
+                    data-bs-toggle="modal"
+                    data-bs-target="#rentalHistoryModal"
+                    (click)="rentalhistory()"
+                  >
                     <i class="bi bi-graph-up-arrow"></i> Rentals History
                   </button>
                 </div>
@@ -171,6 +219,7 @@
         </div>
       </div>
     </div>
+    
 
 
 

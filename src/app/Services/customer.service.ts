@@ -10,6 +10,7 @@ import { Customer, Rental } from '../customer/customer.component';
 export class CustomerService {
 
 
+
  private url='http://localhost:5276/api/Customer/GetCustomers';
   private registerurl='http://localhost:5276/api/Auth/CustomerRegister';
   private loginurl='http://localhost:5276/api/Auth/CustomerLogin';
@@ -61,7 +62,9 @@ getsinglecus(customerid:number){
   return this.http.get('http://localhost:5276/api/Customer/Getcustomer/'+customerid)
 }
 
-
+updateCustomerProfile(profileData: any) {
+  return this.http.put(`http://localhost:5276/api/Customer/UpdateCustomerDetails`, profileData);
+}
 
 
 

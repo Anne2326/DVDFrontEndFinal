@@ -1,0 +1,86 @@
+#reviews{
+  
+    /* background: radial-gradient(circle, rgb(10, 2, 49) 30%, black 90%); */
+background-color: white;
+margin-top: 50px;
+    
+  }
+  /* General section styling */
+ 
+ 
+  
+  /* Container for each review */
+  .container {
+    display: flex;
+    justify-content: center; /* Aligns all child elements in the center */
+    align-items: center;     /* Aligns vertically */
+    margin-bottom: 20px;      /* Space between reviews */
+    opacity: 0.8; /* Adds slight transparency */
+  }
+  
+  .reviews-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between each review box */
+    flex-wrap: wrap;
+  }
+  
+  /* Individual review box */
+  .box {
+    background-color:  rgb(10, 2, 49) ; 
+    border-radius: 15px;
+    padding: 20px;
+    width: 400px; 
+    height: 550px;
+    text-align: center;
+    color:white;
+   /* Smooth transition for hover effect */
+   
+  }
+  .box:hover{
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Review image styles */
+  .rev-img img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover; /* Ensures the image fits well inside the circle */
+    margin-bottom: 15px;
+  }
+  
+  /* Reviewer's name styling */
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color:white;
+  }
+  
+  /* Star rating */
+  .stars i {
+    color: #ffb900; /* Gold color for stars */
+    font-size: 1.5rem;
+  }
+  
+  
+  /* Review text */
+  p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color:white /* Lighter gray text for readability */
+   
+  }
+  
+  /* Optional: Responsiveness for smaller screens */
+  @media (max-width: 768px) {
+    .reviews-container {
+      flex-direction: column; /* Stack the reviews vertically on smaller screens */
+      gap: 5px; /* Smaller gap between stacked boxes */
+    }
+  
+    .box {
+      width: 100%; /* Full width for each box on mobile */
+    }
+  }
+  

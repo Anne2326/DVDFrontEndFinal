@@ -1,0 +1,218 @@
+
+
+
+
+
+
+
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Divider Style */
+  .b-example-divider {
+    border: 0;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 20px;
+  }
+  
+  /* Main Container for Rental History */
+  div[style="width: 85%; height: 750px;"] {
+    margin: 30px auto;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  /* Card Container */
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  /* Heading Style */
+  h1 {
+    color: rgb(10, 10, 31);
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  /* Table Styles */
+  .table {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 14px 20px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+  }
+  
+  /* Table Header Styles */
+  .table th {
+    background-color: #333;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* Table Row Styles */
+  .table td {
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  /* Hover Effect for Table Rows */
+  .table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .card {
+      width: 100%;
+      margin: 0 10px;
+    }
+  
+    h1 {
+      font-size: 26px;
+    }
+  
+    .table th,
+    .table td {
+      font-size: 14px;
+      padding: 10px 15px;
+    }
+  }
+  
+  
+  
+  
+  
+  .speech-bubble {
+    position: relative;
+    width: 250px;
+    height: 200px;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 10px;
+    
+    
+  }
+  
+  
+  .lines {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    padding: 10px;
+  }
+  
+  .line {
+    height: 6px;
+    width: 70%;
+    background-color: #000;
+    border-radius: 3px;
+  }
+  
+  
+  .button-type{
+    text-align: right;
+  }
+  
+  /* General Section Style */
+  .Section {
+    display: flex;
+    justify-content: space-around; /* Distribute cards evenly */
+    flex-wrap: wrap; /* Allow cards to wrap into multiple rows */
+    gap: 20px; /* Add space between each card */
+    padding: 20px;
+    background-color: #f4f4f4; /* Light background for the section */
+    justify-content: center;
+    width: 1700px;
+    margin-left: 100px;
+  }
+  
+  /* Card Style */
+  .card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for card */
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+    text-align: center; /* Center align text and button */
+    padding: 10px;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px); /* Slightly lift card on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+  }
+  
+  /* Card Image Style */
+  .card-img-top {
+    width: 100%;
+    height: 250px;
+    object-fit: cover; /* Ensure image covers the area without distortion */
+    border-radius: 10px;
+  }
+  
+  /* Card Body Style */
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Available Copies Style */
+  .text-danger {
+    color: red;
+  }
+  
+  /* Rent Now Button Style */
+  .btn2 {
+    background-color: #4a838f; /* Blue button background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+  }
+  
+  .btn2:hover {
+    background-color: #132c2e; /* Darker blue on hover */
+  }
+  
+  /* Additional Styles */
+  b {
+    font-weight: bold;
+  
+  }
+  

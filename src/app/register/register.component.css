@@ -23,7 +23,7 @@ h1.display-1 {
     font-weight: bold;
     color: red;
   margin-top: 10px;
-    margin-left: 10px;
+    margin-left: 50px;
 }
 
 /* Form Section Overlay Styling */
@@ -43,7 +43,7 @@ h1.display-1 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     width: 100%;
     max-width: 500px; /* Max width for the form */
-    margin-left: 200px;
+    margin-left:700px;
 }
 
 .form-control{

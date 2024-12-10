@@ -1,0 +1,28 @@
+<div class="b-example-divider b-example-vr" style="height: 50px"></div>
+
+  <div class="container" >
+    <div class="div d-flex">
+      <h1 style="color: rgb(10, 10, 52);font-size: 50px;">Trending Now</h1>
+
+      <input type="search" id="form1" class="form-control bg-white" placeholder="Select Your Movie Here..."
+        [(ngModel)]="searchText" style="
+            width: 400px;
+            margin-left: 400px;
+            border-color: rgb(12, 12, 79);
+          " />
+    </div>
+  </div>
+  <br />
+  <div class="Section">
+    <div class="card" style="width: 15rem" *ngFor="let dvd of dvds | filterDvd : searchText">
+      <img class="card-img-top" [src]="'http://localhost:5276' + dvd.imageUrl" alt="{{ dvd.title }}" />
+      <div class="card-body">
+        <h3 class="card-title fs-4">{{ dvd.title }}</h3>
+        <p style="color: rgb(4, 2, 16);font-size: 20px;">Director:{{ dvd.director }}</p>
+        <p style="color: black;font-size: 20px;">Price:{{ dvd.price }}</p>
+        <p style="color: black;font-size: 20px;">Genere:{{ dvd.genre }}</p>
+        <b class="card-text text-danger fs-5">Available Copies: {{ dvd.copiesAvailable }}</b>
+        <button class="btn2" (click)="Rent(dvd)">Rent Now</button>
+      </div>
+    
+    </div> 

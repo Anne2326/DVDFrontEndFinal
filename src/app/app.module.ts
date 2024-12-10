@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminComponent } from './layout/admin/admin.component';
-import { BlankComponent } from './layout/blank/blank.component';
+
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { RouterModule, RouterOutlet } from '@angular/router';
@@ -21,6 +21,9 @@ import { FilterCusPipe } from './pipes/filter-cus.pipe';
 import { FilterDvdPipe } from './pipes/filter-dvd.pipe';
 import { PendingFilPipe } from './pipes/pending-fil.pipe';
 import { EditdvdComponent } from './layout/admin/editdvd/editdvd.component';
+import { HomeComponent } from './customer/home/home.component';
+import { CusreviewComponent } from './customer/cusreview/cusreview.component';
+import { CommentComponent } from './customer/comment/comment.component';
 
 
 @NgModule({
@@ -28,7 +31,7 @@ import { EditdvdComponent } from './layout/admin/editdvd/editdvd.component';
     AppComponent,
 
     AdminComponent,
-    BlankComponent,
+ 
     LoginComponent,
     RegisterComponent,
     ReviewComponent,
@@ -38,6 +41,9 @@ import { EditdvdComponent } from './layout/admin/editdvd/editdvd.component';
     FilterDvdPipe,
     PendingFilPipe,
     EditdvdComponent,
+    HomeComponent,
+    CusreviewComponent,
+    CommentComponent,
   ],
   imports: [
     BrowserModule,

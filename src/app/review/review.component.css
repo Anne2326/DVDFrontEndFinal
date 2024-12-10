@@ -14,7 +14,7 @@ body {
         url('/Dvd.jpg');
     background-size: cover;
     background-position: center;
-    min-height: 100vh;
+    min-height: 60vh;
     display: flex;
     flex-direction: column;
     
@@ -53,7 +53,8 @@ body {
     cursor: pointer;
     position: absolute;
     top: 30px;
-    right: 30px;
+ 
+
   }
   
   .btn-signin:hover {
@@ -88,6 +89,7 @@ body {
     display: flex;
     overflow-x: auto;
     gap: 25px;
+     margin-left: 120px; 
     padding: 50px;
     cursor: pointer;
     /* cursor: -webkit-zoom-out; */
@@ -337,7 +339,7 @@ box-shadow: 0 12px 24px rgba(112, 104, 104, 0.4);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     height: 65px;
     margin: auto;
-    margin-left: 420px;
+    margin-left: 610px;
 
 }
 

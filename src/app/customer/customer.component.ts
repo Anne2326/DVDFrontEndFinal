@@ -53,7 +53,7 @@ export interface Rental {
 export class CustomerComponent implements OnInit {
 
   onSubmit() {
-    throw new Error('Method not implemented.');
+    
   }
 
   editProfile: FormGroup;
@@ -66,7 +66,7 @@ export class CustomerComponent implements OnInit {
 
   customerid: number = 0;
 
-  showdashboard = true;
+  showdashboard = false;
   showreview = false;
   showrental = false;
   showprofile = false;
@@ -130,21 +130,8 @@ export class CustomerComponent implements OnInit {
     });
   }
 
-  customerhomepage() {
-    this.resetSections();
-    this.showdashboard = true;
-    this.loaddvds();
-  }
-
-  review() {
-    this.resetSections();
-    this.showreview = true;
-  }
-  comment() {
-    this.resetSections();
-    this.showcomment = true;
-  }
-
+ 
+ 
   profile() {
     this.resetSections();
     console.log('hi show profile');

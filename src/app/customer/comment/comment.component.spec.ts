@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BlankComponent } from './blank.component';
+import { CommentComponent } from './comment.component';
 
-describe('BlankComponent', () => {
-  let component: BlankComponent;
-  let fixture: ComponentFixture<BlankComponent>;
+describe('CommentComponent', () => {
+  let component: CommentComponent;
+  let fixture: ComponentFixture<CommentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BlankComponent]
+      declarations: [CommentComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BlankComponent);
+    fixture = TestBed.createComponent(CommentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

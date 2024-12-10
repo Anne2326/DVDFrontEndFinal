@@ -1,46 +1,50 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { BlankComponent } from './layout/blank/blank.component';
+
 import { ReviewComponent } from './review/review.component';
 import { CustomerComponent } from './customer/customer.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './layout/admin/admin.component';
 import { EditdvdComponent } from './layout/admin/editdvd/editdvd.component';
 import { authGurdGuard } from './guard/auth-gurd.guard';
+import { HomeComponent } from './customer/home/home.component';
+import { CusreviewComponent } from './customer/cusreview/cusreview.component';
+import { CommentComponent } from './customer/comment/comment.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: BlankComponent,
-    children: [
+  { path: '', component: ReviewComponent },
+  { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
+ 
+  
+      
+      
+      
+      
       {
-        path: '',
-        component: ReviewComponent
-      },
-      {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
-        path: 'register',
-        component: RegisterComponent
+        path: 'customer',
+        component: CustomerComponent,
+        children: [
+          { path: '', component: HomeComponent },
+          { path: 'cusreview', component: CusreviewComponent },
+          { path: 'comment', component: CommentComponent },
+
+        ]
       },
       
-      {path: 'customer', component: CustomerComponent},
-      { path: 'admin', component: AdminComponent ,
-        children:[{
-          path:'Edit/:id',
-          component:EditdvdComponent
-        }]
-      },
-     
-
-
-    ]
-   
-
-  }
+        
+      
+      {
+        path: 'admin',
+        component: AdminComponent},
+       
+          { path: 'edit/:id', component: EditdvdComponent }
+        
+      
+    
+  
+  
 
 
 

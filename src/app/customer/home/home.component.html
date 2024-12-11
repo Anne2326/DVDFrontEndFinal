@@ -46,13 +46,13 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="rentModalLabel">Movie_Name{{ selectedDvd?.title }} - Rent Details</h5>
+            <h5 class="modal-title" id="rentModalLabel"> Rent Details</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div *ngIf="selectedDvd">
               <img [src]="'http://localhost:5276' + selectedDvd.imageUrl" class="img-fluid" alt="DVD Image" />
-              <p><strong>Title:</strong>{{ selectedDvd?.title }} </p>
+              <p><strong>Title:</strong>{{ selectedDvd.title }} </p>
               <p><strong>Director:</strong> {{ selectedDvd.director }}</p>
               <p><strong>Price:</strong> {{ selectedDvd.price }}</p>
               <p><strong>Genre:</strong> {{ selectedDvd.genre }}</p>
@@ -61,7 +61,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-success" (click)="Rent(selectedDvd)">Confirm Rent</button>
-            <button type="button" class="btn btn-outline-danger" (click)="addToFavorites()">
+            <button type="button" class="btn btn-outline-danger" (click)="addFavorite(selectedDvd.id)">
               <i class="bi bi-heart"></i> Add to Favorites
             </button>
           </div>
@@ -69,3 +69,50 @@
       </div>
     </div>
     
+<!-- Modal -->
+<div class="modal fade" id="favoritesModal" tabindex="-1" aria-labelledby="favoritesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="favoritesModalLabel">Your Favorites</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="favorites.length > 0; else noFavorites">
+          <table class="table table-striped table-hover mt-3">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Title</th>
+                <th scope="col">Director</th>
+                <th scope="col">Price</th>
+                <th scope="col">Genre</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of favorites">
+                <td>
+                  <img [src]="'http://localhost:5276' + item.imageUrl" class="img-fluid" alt="{{ item.title }}" style="height: 80px; width: auto;" />
+                </td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.director }}</td>
+                <td>{{ item.price | currency }}</td>
+                <td>{{ item.genre }}</td>
+                <td>
+                  <button class="btn btn-danger btn-sm" (click)="removeFavorite(item.id)">Remove</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+        </div>
+        <ng-template #noFavorites>
+          <p class="text-center text-muted">No favorites added yet!</p>
+        </ng-template>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" (click)="goToFavoritesPage()">Manage All Favorites</button>
+      </div>
+    </div>
+  </div>
+</div>

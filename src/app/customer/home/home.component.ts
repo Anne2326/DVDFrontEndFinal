@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { CustomerService } from '../../Services/customer.service';
 import { AdminService } from '../../Services/admin.service';
+import { FavouriteService } from '../../Services/favourite.service';
 
 
 declare var bootstrap: any;
@@ -16,19 +17,24 @@ declare var bootstrap: any;
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
+
   dvds: DVD[] = [];
   selectedDvd!: DVD;
   searchText: string = '';
   rentals: Rental[] = [];
+  favorites: any[] = []
+  customerid: number = 0;
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
     private customerservice: CustomerService,
-    private dvdservice: AdminService
+    private dvdservice: AdminService,
+    private favoriteservice:FavouriteService
   ){}
   ngOnInit(): void {
     this.loaddvds();
+    this.loadFavorites();
   }
 
   Rent(dvd: DVD) {
@@ -90,6 +96,7 @@ export class HomeComponent implements OnInit {
   loaddvds() {
     this.dvdservice.getalldvds().subscribe((data) => {
       this.dvds = data;
+      console.log(this.dvds)
     });
   }
 
@@ -101,16 +108,71 @@ openRentModal(dvd: DVD): void {
   const modal = new bootstrap.Modal(document.getElementById('rentModal')!);
   modal.show();
 }
-addToFavorites(): void {
-  this.toastr.info('The movie has been added to your favorites!', 'Added to Favorites');
-  this.closeModal();
+
+ 
+loadFavorites(){
+  const getcustomer = localStorage.getItem('customer'); // Retrieve the customer from localStorage
+  if (getcustomer) {
+    try {
+      const customer = JSON.parse(getcustomer);
+      console.log(customer.Id); // Parse the JSON string to an object
+      if (customer.Id) {
+        this.customerid = +customer.Id; // Assign the ID to cusId
+        console.log(this.customerid);
+      }
+    } catch (error) {
+      console.error('Error parsing customer data from localStorage:', error);
+      this.toastr.error('Failed to retrieve customer history.', 'Error');
+      return;
+    }
+  }
+  this.favoriteservice.getFavoritesByUser(this.customerid).subscribe(
+    (data) => {
+      this.favorites = data;
+      console.log(this.favorites)
+    },
+    (error) => {
+      this.toastr.error('Failed to load favorites', 'Error');
+    }
+  );
 }
+
+addFavorite(dvdId: number){
+  this.favoriteservice.addFavorite(this.customerid, dvdId).subscribe(
+    (response) => {
+      this.toastr.success('DVD added to favorites successfully', 'Success');
+      this.loadFavorites();
+      this.closeModal()
+    },
+    (error) => {
+      this.toastr.error(error.error || 'Failed to add favorite', 'Error');
+    }
+  );
+}
+removeFavorite(dvdId: number): void {
+  this.favoriteservice.removeFavorite(this.customerid, dvdId).subscribe(
+    (response) => {
+      this.toastr.success('DVD removed from favorites successfully', 'Success');
+      this.loadFavorites();
+    },
+    (error) => {
+      this.toastr.error(error.error || 'Failed to remove favorite', 'Error');
+    }
+  );
+}
+
+goToFavoritesPage() {
+  this.router.navigate(['/customer'])
+  }
+
 
 // Close the modal after an action
 closeModal(): void {
   const modal = new bootstrap.Modal(document.getElementById('rentModal')!);
   modal.hide();
 }
+
+
 
 
 }

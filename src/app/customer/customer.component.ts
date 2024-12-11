@@ -12,6 +12,7 @@ import { CustomerService } from '../Services/customer.service';
 import { AdminService } from '../Services/admin.service';
 import { DVD } from '../layout/admin/admin.component';
 import { FavouriteService } from '../Services/favourite.service';
+import { ApiResponse } from './home/home.component';
 declare var bootstrap: any;
 
 function emailContainsAt(control: AbstractControl) {
@@ -61,7 +62,7 @@ export class CustomerComponent implements OnInit {
   editProfile: FormGroup;
   isDisabled = false;
   fulldisabled=true;
-  favorites: any[] = []
+  favorites: DVD[] = []
 
   searchText: string = '';
 
@@ -297,33 +298,54 @@ closefavouriteModal(): void {
 }
 
 
-loadFavorites(){
-  this.favouriteservice.getFavoritesByUser(this.customerid).subscribe(
-    (data) => {
-      this.favorites = data;
-      console.log('favourite:',this.favorites)
-    },
-    (error) => {
-      this.toastr.error('Failed to load favorites', 'Error');
+loadFavorites(): void {
+  const getcustomer = localStorage.getItem('customer'); // Retrieve the customer from localStorage
+  if (getcustomer) {
+    try {
+      const customer = JSON.parse(getcustomer); // Parse the JSON string to an object
+      if (customer.Id) {
+        this.customerid = +customer.Id; // Assign the ID to customerid
+      }
+    } catch (error) {
+      console.error('Error parsing customer data from localStorage:', error);
+      this.toastr.error('Failed to retrieve customer data.', 'Error');
+      return;
     }
-  );
-}
-
-removeFavorite(dvdId: number): void {
-  this.favouriteservice.removeFavorite(this.customerid, dvdId).subscribe(
-    (response) => {
-      this.toastr.success('DVD removed from favorites successfully', 'Success');
-      this.loadFavorites();
-    },
-    (error) => {
-      this.toastr.error(error.error || 'Failed to remove favorite', 'Error');
-    }
-  );
-}
-
-goToFavoritesPage() {
-  this.router.navigate(['/customer'])
   }
+
+  this.favouriteservice.getFavoritesByUser(this.customerid).subscribe(
+    (response) => {
+      if (response.success) {
+        this.favorites = response.data || []; // Update favorites list
+       // this.toastr.success('Favorites loaded successfully.', 'Success');
+      } else {
+        this.toastr.warning(response.message, 'Warning');
+      }
+    },
+    (error) => {
+      this.toastr.error(
+        error.error?.message || 'Failed to load favorites.',
+        'Error'
+      );
+    }
+  );
+}
+
+// removeFavorite(dvdId: number): void {
+//   this.favouriteservice.removeFavorite(this.customerid, dvdId).subscribe(
+//     (response) => {
+//       this.toastr.success('DVD removed from favorites successfully', 'Success');
+//       this.loadFavorites();
+//     },
+//     (error) => {
+//       this.toastr.error(error.error || 'Failed to remove favorite', 'Error');
+//     }
+//   );
+// }
+
+// goToFavoritesPage() {
+//   this.router.navigate(['/customer'])
+//   }
 
   logout(){
      // Remove session-specific data

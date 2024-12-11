@@ -89,16 +89,6 @@ modalInstance: any;
       },
     });
   }
-  
-
-  selectedFile: File | null = null;
-
-onFileSelected(event: any) {
-  const file = event.target.files[0];
-  if (file) {
-    this.selectedFile = file;
-  }
-}
 
   
   

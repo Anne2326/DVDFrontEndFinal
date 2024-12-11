@@ -1,0 +1,45 @@
+<!-- Modal HTML -->
+<div class="modal fade" id="favoriteModal" tabindex="-1" aria-labelledby="favoriteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+          <h5 class="modal-title" id="favoriteModalLabel">Your Favorite DVDs</h5>
+          <!-- Back Button inside Modal Header -->
+          <button class="btn btn-secondary" (click)="goBack()">
+            <i class="bi bi-arrow-left-circle"></i> Back to Customer Page
+          </button>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <div class="card-container">
+            <div class="row">
+              <!-- Iterate over the DVDs and show them in cards -->
+              <div class="col-md-4" *ngFor="let dvd of favorites">
+                <div class="card">
+                  <img [src]="'http://localhost:5276' + dvd.imageUrl" class="card-img-top" alt="{{ dvd.title }}">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ dvd.title }}</h5>
+                    <p class="card-text">
+                      <strong>Director:</strong> {{ dvd.director }} <br>
+                      <strong>Price:</strong> {{ dvd.price | currency }} <br>
+                      <strong>Genre:</strong> {{ dvd.genre }}
+                    </p>
+                    <button class="btn btn-danger w-100" (click)="removeFavorite(dvd.id)">
+                      <i class="bi bi-trash"></i> Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

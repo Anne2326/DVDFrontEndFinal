@@ -186,8 +186,7 @@ customerId: number=0;
   }
 
   editDvd(id:number) {
-    this.router.navigate(['/admin/Edit',id])
-     
+    this.router.navigate(['/admin/edit',id])
   }
   deleteDvd(id: number) {
     if (confirm('Do you want to delete?')) {

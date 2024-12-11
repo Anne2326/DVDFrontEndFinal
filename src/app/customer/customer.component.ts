@@ -11,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from '../Services/customer.service';
 import { AdminService } from '../Services/admin.service';
 import { DVD } from '../layout/admin/admin.component';
+import { FavouriteService } from '../Services/favourite.service';
+declare var bootstrap: any;
 
 function emailContainsAt(control: AbstractControl) {
   const email = control.value;
@@ -59,6 +61,7 @@ export class CustomerComponent implements OnInit {
   editProfile: FormGroup;
   isDisabled = false;
   fulldisabled=true;
+  favorites: any[] = []
 
   searchText: string = '';
 
@@ -79,7 +82,8 @@ export class CustomerComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private customerservice: CustomerService,
-    private dvdservice: AdminService
+    private dvdservice: AdminService,
+    private favouriteservice:FavouriteService
   ) {
     this.editProfile = this.fb.group({
       id:[],
@@ -106,6 +110,7 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
     this.loaddvds();
+    this.loadFavorites();
     
       this.editProfile = this.fb.group({
         id: [{ value: '', disabled: true }],
@@ -274,7 +279,50 @@ export class CustomerComponent implements OnInit {
   loaddvds() {
     this.dvdservice.getalldvds().subscribe((data) => {
       this.dvds = data;
+
     });
+  }
+
+   // Open the Favorites modal
+   openFavoritesModal(): void {
+    const modalElement = document.getElementById('favoritesModal')!;
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+  }
+
+  // Close the modal after an action
+closefavouriteModal(): void {
+  const modal = new bootstrap.Modal(document.getElementById('rentModal')!);
+  modal.hide();
+}
+
+
+loadFavorites(){
+  this.favouriteservice.getFavoritesByUser(this.customerid).subscribe(
+    (data) => {
+      this.favorites = data;
+      console.log('favourite:',this.favorites)
+    },
+    (error) => {
+      this.toastr.error('Failed to load favorites', 'Error');
+    }
+  );
+}
+
+removeFavorite(dvdId: number): void {
+  this.favouriteservice.removeFavorite(this.customerid, dvdId).subscribe(
+    (response) => {
+      this.toastr.success('DVD removed from favorites successfully', 'Success');
+      this.loadFavorites();
+    },
+    (error) => {
+      this.toastr.error(error.error || 'Failed to remove favorite', 'Error');
+    }
+  );
+}
+
+goToFavoritesPage() {
+  this.router.navigate(['/customer'])
   }
 
   logout(){

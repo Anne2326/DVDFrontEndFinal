@@ -11,56 +11,37 @@ import { authGurdGuard } from './guard/auth-gurd.guard';
 import { HomeComponent } from './customer/home/home.component';
 import { CusreviewComponent } from './customer/cusreview/cusreview.component';
 import { CommentComponent } from './customer/comment/comment.component';
+import { ManagefavouriteComponent } from './customer/managefavourite/managefavourite.component';
 
 const routes: Routes = [
   { path: '', component: ReviewComponent },
   { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent },
+
+  {
+    path: 'customer',
+    component: CustomerComponent,
+    children: [
+      { path: '', component: HomeComponent },
+      { path: 'cusreview', component: CusreviewComponent },
+      { path: 'comment', component: CommentComponent },
+      {path:'manage-favourite',component:ManagefavouriteComponent}
+    ],
+  },
+
+  {
+    path: 'admin',
+    component: AdminComponent,
+    children:[
+      { path: 'edit/:id', component: EditdvdComponent }
+    ]
+  },
+
  
-  
-      
-      
-      
-      
-      {
-        path: 'customer',
-        component: CustomerComponent,
-        children: [
-          { path: '', component: HomeComponent },
-          { path: 'cusreview', component: CusreviewComponent },
-          { path: 'comment', component: CommentComponent },
-
-        ]
-      },
-      
-        
-      
-      {
-        path: 'admin',
-        component: AdminComponent},
-       
-          { path: 'edit/:id', component: EditdvdComponent }
-        
-      
-    
-  
-  
-
-
-
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule {
-
-
-
-
-
-
-
-
-}
+export class AppRoutingModule {}

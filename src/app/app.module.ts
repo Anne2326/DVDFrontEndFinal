@@ -24,14 +24,13 @@ import { EditdvdComponent } from './layout/admin/editdvd/editdvd.component';
 import { HomeComponent } from './customer/home/home.component';
 import { CusreviewComponent } from './customer/cusreview/cusreview.component';
 import { CommentComponent } from './customer/comment/comment.component';
+import { ManagefavouriteComponent } from './customer/managefavourite/managefavourite.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
     AdminComponent,
- 
     LoginComponent,
     RegisterComponent,
     ReviewComponent,
@@ -44,12 +43,12 @@ import { CommentComponent } from './customer/comment/comment.component';
     HomeComponent,
     CusreviewComponent,
     CommentComponent,
+    ManagefavouriteComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-
     RouterOutlet,
     FormsModule,
     ReactiveFormsModule, CommonModule, RouterModule, ToastrModule.forRoot(), BsDatepickerModule, HttpClientModule

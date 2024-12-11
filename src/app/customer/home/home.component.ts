@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   selectedDvd!: DVD;
   searchText: string = '';
   rentals: Rental[] = [];
-  favorites: any[] = []
+  favorites: DVD[] = []
   customerid: number = 0;
   constructor(
     private fb: FormBuilder,
@@ -110,65 +110,122 @@ openRentModal(dvd: DVD): void {
 }
 
  
-loadFavorites(){
+
+loadFavorites(): void {
   const getcustomer = localStorage.getItem('customer'); // Retrieve the customer from localStorage
   if (getcustomer) {
     try {
-      const customer = JSON.parse(getcustomer);
-      console.log(customer.Id); // Parse the JSON string to an object
+      const customer = JSON.parse(getcustomer); // Parse the JSON string to an object
       if (customer.Id) {
-        this.customerid = +customer.Id; // Assign the ID to cusId
-        console.log(this.customerid);
+        this.customerid = +customer.Id; // Assign the ID to customerid
       }
     } catch (error) {
       console.error('Error parsing customer data from localStorage:', error);
-      this.toastr.error('Failed to retrieve customer history.', 'Error');
+      this.toastr.error('Failed to retrieve customer data.', 'Error');
       return;
     }
   }
+
   this.favoriteservice.getFavoritesByUser(this.customerid).subscribe(
-    (data) => {
-      this.favorites = data;
-      console.log(this.favorites)
+    (response) => {
+      if (response.success) {
+        this.favorites = response.data || []; // Update favorites list
+        //this.toastr.success('Favorites loaded successfully.', 'Success');
+      } else {
+        this.toastr.warning(response.message, 'Warning');
+      }
     },
     (error) => {
-      this.toastr.error('Failed to load favorites', 'Error');
+      this.toastr.error(
+        error.error?.message || 'Failed to load favorites.',
+        'Error'
+      );
     }
   );
 }
 
-addFavorite(dvdId: number){
+addFavorite(dvdId: number): void {
   this.favoriteservice.addFavorite(this.customerid, dvdId).subscribe(
     (response) => {
-      this.toastr.success('DVD added to favorites successfully', 'Success');
-      this.loadFavorites();
-      this.closeModal()
+      if (response.success) {
+        this.toastr.success(response.message, 'Success');
+        this.loadFavorites(); // Refresh the favorites list
+        this.closeModal(); // Close the modal
+      } else {
+        this.toastr.warning(response.message, 'Warning');
+      }
     },
     (error) => {
-      this.toastr.error(error.error || 'Failed to add favorite', 'Error');
+      this.toastr.error(
+        error.error?.message || 'Failed to add favorite.',
+        'Error'
+      );
     }
   );
 }
+
+// removeFavorite(dvdId: number): void {
+//   this.favoriteservice.removeFavorite(this.customerid, dvdId).subscribe(
+//     (response) => {
+//       if (response.success) {
+//         this.toastr.success(response.message, 'Success');
+//         this.loadFavorites(); // Refresh the favorites list
+//       } else {
+//         this.toastr.warning(response.message, 'Warning');
+//       }
+//     },
+//     (error) => {
+//       this.toastr.error(
+//         error.error?.message || 'Failed to remove favorite.',
+//         'Error'
+//       );
+//     }
+//   );
+// }
 removeFavorite(dvdId: number): void {
   this.favoriteservice.removeFavorite(this.customerid, dvdId).subscribe(
     (response) => {
-      this.toastr.success('DVD removed from favorites successfully', 'Success');
-      this.loadFavorites();
+      if (response.success) {
+        this.toastr.success('DVD removed from favorites successfully.', 'Success');
+        // Update the UI immediately by filtering out the removed item
+        this.favorites = this.favorites.filter((dvd) => dvd.id !== dvdId);
+      } else {
+        this.toastr.warning(response.message || 'Failed to remove favorite.', 'Warning');
+      }
     },
     (error) => {
-      this.toastr.error(error.error || 'Failed to remove favorite', 'Error');
+      this.toastr.error(error.error?.message || 'Failed to remove favorite.', 'Error');
     }
   );
 }
 
+
+
+
 goToFavoritesPage() {
-  this.router.navigate(['/customer'])
+  // this.router.navigate(['/customer/manage-favourite'])
+  this.router.navigate(['/customer/manage-favourite'], {
+    state: { openModal: true } // Pass state to open the modal
+  });
   }
 
 
 // Close the modal after an action
 closeModal(): void {
   const modal = new bootstrap.Modal(document.getElementById('rentModal')!);
+  modal.hide();
+}
+
+   // Open the Favorites modal
+   openFavoritesModal(): void {
+    const modalElement = document.getElementById('favoritesModal')!;
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+  }
+
+  // Close the modal after an action
+closefavouriteModal(): void {
+  const modal = new bootstrap.Modal(document.getElementById('favoritesModal')!);
   modal.hide();
 }
 
@@ -188,4 +245,11 @@ export interface Rental {
   customer?: Customer;
   dvd?: DVD;
   // Status of the rental (e.g., "Pending")
+}
+
+
+export interface ApiResponse<T> {
+  success: boolean;
+  message: string;
+  data?: T;
 }

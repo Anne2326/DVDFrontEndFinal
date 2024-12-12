@@ -1,0 +1,73 @@
+<!-- Report Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reportModalLabel">DVD Inventory and Rental Report</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="report-container">
+            <p>Date: {{ currentDate }}</p>
+  
+            <!-- Inventory Section -->
+            <h2 class="section-title">Inventory Report</h2>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Director</th>
+                  <th>Price</th>
+                  <th>Genre</th>
+                  <th>Available Copies</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let dvd of inventory; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ dvd.title }}</td>
+                  <td>{{ dvd.director }}</td>
+                  <td>{{ dvd.price | currency }}</td>
+                  <td>{{ dvd.genre }}</td>
+                  <td>{{ dvd.copiesAvailable }}</td>
+                </tr>
+              </tbody>
+            </table>
+  
+            <!-- Rental Section -->
+            <h2 class="section-title">Rental Report</h2>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Customer Name</th>
+                  <th>DVD Title</th>
+                  <th>Rental Date</th>
+                  <th>Return Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let rental of rentals; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ rental.customer?.userName }}</td>
+                  <td>{{ rental.dvd?.title }}</td>
+                  <td>{{ rental.rentalDate | date }}</td>
+                  <td>{{ rental.returnDate | date }}</td>
+                  <td class="text-warning">
+                    {{rental.status }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary me-2" (click)="printReport()">Print Report</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="  goBack()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

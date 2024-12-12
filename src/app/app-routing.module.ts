@@ -12,6 +12,7 @@ import { HomeComponent } from './customer/home/home.component';
 import { CusreviewComponent } from './customer/cusreview/cusreview.component';
 import { CommentComponent } from './customer/comment/comment.component';
 import { ManagefavouriteComponent } from './customer/managefavourite/managefavourite.component';
+import { ReportComponent } from './layout/admin/report/report.component';
 
 const routes: Routes = [
   { path: '', component: ReviewComponent },
@@ -25,7 +26,7 @@ const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'cusreview', component: CusreviewComponent },
       { path: 'comment', component: CommentComponent },
-      {path:'manage-favourite',component:ManagefavouriteComponent}
+      {path:'manage-favourite',component:ManagefavouriteComponent},
     ],
   },
 
@@ -33,7 +34,9 @@ const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     children:[
-      { path: 'edit/:id', component: EditdvdComponent }
+      { path: 'edit/:id', component: EditdvdComponent },
+      {path:'report',component:ReportComponent}
+
     ]
   },
 

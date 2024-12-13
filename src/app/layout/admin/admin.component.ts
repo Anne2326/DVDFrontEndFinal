@@ -38,6 +38,7 @@ customerId: number=0;
 
   searchdvd: string = '';
   searchcustomer: string = '';
+  pendingRentals: Rental[]=[];
 
   constructor(
     private fb: FormBuilder,
@@ -204,6 +205,7 @@ customerId: number=0;
   getrentals() {
     this.adminservice.getallrentals().subscribe((data) => {
       this.rentals = data;
+      this.pendingRentals = this.rentals.filter((rental) => rental.status === 'Pending');
       console.log(this.rentals);
     });
   }

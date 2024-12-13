@@ -36,6 +36,7 @@ export interface Customer {
 }
 
 export interface Rental {
+isReturned: any;
   rentalId: number; // Unique identifier for the rental
   customerId: number; // ID of the customer who rented the DVD
   dvdId: number; // ID of the rented DVD

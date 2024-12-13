@@ -59,6 +59,7 @@ customerId: number=0;
   }
   ngOnInit(): void {
     this.loadcustomers();
+    this.homepage()
     this.loaddvds();
     this.getrentals();
     this.loadAcceptedRentalsCount();
@@ -105,7 +106,9 @@ customerId: number=0;
     this.showreturn=false
   }
   reportsShow() {
-    throw new Error('Method not implemented.');
+    this.showdashboard=false
+    this.resetSections()
+   this.router.navigate(['/admin/report'])
   }
   returnShow() {
     this.resetSections()
@@ -188,6 +191,7 @@ customerId: number=0;
   editDvd(id:number) {
     this.router.navigate(['/admin/edit',id])
   }
+
   deleteDvd(id: number) {
     if (confirm('Do you want to delete?')) {
       this.adminservice.deletedvd(id).subscribe((data) => {

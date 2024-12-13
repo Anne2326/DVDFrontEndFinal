@@ -25,6 +25,7 @@ import { HomeComponent } from './customer/home/home.component';
 import { CusreviewComponent } from './customer/cusreview/cusreview.component';
 import { CommentComponent } from './customer/comment/comment.component';
 import { ManagefavouriteComponent } from './customer/managefavourite/managefavourite.component';
+import { ReportComponent } from './layout/admin/report/report.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { ManagefavouriteComponent } from './customer/managefavourite/managefavou
     CusreviewComponent,
     CommentComponent,
     ManagefavouriteComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,

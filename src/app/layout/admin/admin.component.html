@@ -62,6 +62,7 @@
       <li class="nav-item">
         <button class="btn text-white m-3 fs-5" (click)="displayRentals()">
           <i class="bi bi-graph-up-arrow"></i> Rental request
+          <span class="badge badge-pill badge-danger bg-danger">{{ pendingRentals.length }}</span>
         </button>
       </li>
       <li class="nav-item">
@@ -219,6 +220,15 @@
                   <p class="display-4">{{rentals.length}}</p>
               </div>
           </div>
+
+          
+          <!-- Square 3: Number of pending Rentals -->
+          <div class="col-4">
+            <div class="card text-center text-white bg-dark shadow-lg p-4">
+                <h5>Total Pending Rentals</h5>
+                <p class="display-4">{{pendingRentals.length}}</p>
+            </div>
+        </div>
   
           <!-- Square 4: Number of Returns -->
           <div class="col-4">
